@@ -1,6 +1,8 @@
 package com.example.actorsearchapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,18 +12,23 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.actorsearchapplication.adapters.ActorDetailViewAdapter;
+import com.example.actorsearchapplication.adapters.FilmographyRecyclerAdapter;
 import com.example.actorsearchapplication.observer.ActorDetailObserver;
+import com.example.actorsearchapplication.observer.FilmographyObserver;
 import com.example.actorsearchapplication.viewmodels.ActorDetailViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 
 public class ActorDetailActivity extends AppCompatActivity {
     ImageButton imageButton;
+    RecyclerView recyclerView_filmography;
 
     private int id;
     private ActorDetailViewModel actorDetailViewModel;
     private ActorDetailViewAdapter actorDetailViewAdapter;
+    private FilmographyRecyclerAdapter filmographyRecyclerAdapter;
     private View actorDetailView;
     private LinearLayout layout_parent_actor_detail;
+    private LinearLayout layout_parent_filmography;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,9 @@ public class ActorDetailActivity extends AppCompatActivity {
         createStatusBar();
         setContentView(R.layout.activity_actor_detail);
         imageButton = findViewById(R.id.backButton_actor);
+        recyclerView_filmography = findViewById(R.id.recyclerView_filmography);
         layout_parent_actor_detail = findViewById(R.id.layout_parent_actor_detail);
+        layout_parent_filmography = findViewById(R.id.layout_parent_filmography);
 
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(imageButton);
@@ -38,10 +47,17 @@ public class ActorDetailActivity extends AppCompatActivity {
         id = intent.getIntExtra("actor_id",-1); // 예외처리 해야됨
 
         actorDetailView = View.inflate(getApplicationContext(),R.layout.layout_actor_detail,layout_parent_actor_detail);
-        actorDetailViewAdapter = new ActorDetailViewAdapter(actorDetailView);
 
+        actorDetailViewAdapter = new ActorDetailViewAdapter(actorDetailView);
+        filmographyRecyclerAdapter = new FilmographyRecyclerAdapter();
         actorDetailViewModel = new ActorDetailViewModel();
+
+        recyclerView_filmography.setAdapter(filmographyRecyclerAdapter);
+        recyclerView_filmography.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
         actorDetailViewModel.getActorDetail().observe(this,new ActorDetailObserver(actorDetailViewAdapter));
+        actorDetailViewModel.getFilmography().observe(this,new FilmographyObserver(filmographyRecyclerAdapter));
+
         actorDetailViewModel.requestActorDetail(id);
         actorDetailViewModel.requestFilmography(id);
     }

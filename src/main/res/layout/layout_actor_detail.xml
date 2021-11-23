@@ -83,9 +83,9 @@
             android:id="@+id/tv_add_overview_actor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:padding="10dp"
             android:textColor="@color/black"
-            android:text="+더보기" />
+            android:text="+ 더보기" />
 
         <TextView
             android:id="@+id/tv_overview_actor"

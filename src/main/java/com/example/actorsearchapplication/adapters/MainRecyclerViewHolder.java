@@ -14,7 +14,9 @@ import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.ActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TrendModel;
+import com.example.actorsearchapplication.models.TvModel;
 
 public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
 
@@ -35,7 +37,8 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View view) {
                 if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS) activityViewListener.requestSwitchSelectedActor(getAdapterPosition());
-                else if ( mode == MainRecyclerViewAdapter.MODE_TRENDS) activityViewListener.requestSwitchSelectedTrend(getAdapterPosition());
+                else if ( mode == MainRecyclerViewAdapter.MODE_MOVIE) activityViewListener.requestSwitchSelectedMovie(getAdapterPosition());
+                else if ( mode == MainRecyclerViewAdapter.MODE_TV ) activityViewListener.requestSwitchSelectedTv(getAdapterPosition());
             }
         });
     }
@@ -51,13 +54,18 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
                 .load("https://image.tmdb.org/t/p/w300/"+popularActor.getProfilePath()).into(mainImage);
     }
 
-    public void bind(TrendModel trend){
-        popularity.setText(trend.getVote_average()+"");
+    public void bind(MovieModel movie){
+        popularity.setText(movie.getVote_average()+"");
         iconImage.setImageResource(R.drawable.ic_star);
         Glide.with(itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w300/"+trend.getPoster_path()).into(mainImage);
+                .load("https://image.tmdb.org/t/p/w300/"+movie.getPoster_path()).into(mainImage);
     }
 
-
+    public void bind(TvModel tv){
+        popularity.setText(tv.getVote_average()+"");
+        iconImage.setImageResource(R.drawable.ic_star);
+        Glide.with(itemView.getContext())
+                .load("https://image.tmdb.org/t/p/w300/"+tv.getPoster_path()).into(mainImage);
+    }
 }
 

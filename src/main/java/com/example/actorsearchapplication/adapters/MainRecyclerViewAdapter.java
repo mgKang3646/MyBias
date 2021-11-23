@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.actorsearchapplication.ActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TrendModel;
+import com.example.actorsearchapplication.models.TvModel;
 
 import java.util.List;
 
@@ -20,10 +22,14 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     // 일단은 ActorRecyclerViewHolder 전용 어댑터로 구현한다.
 
     public static final int MODE_POPULAR_ACTORS = 0;
-    public static final int MODE_TRENDS = 1;
+    public static final int MODE_MOVIE = 1;
+    public static final int MODE_TV = 2;
+
 
     private List<ActorModel> actors;
-    private List<TrendModel> trends;
+    private List<MovieModel> movies;
+    private List<TvModel> tvs;
+
     private ActivityViewListener activityViewListener;
 
     private int mode = 0;
@@ -45,8 +51,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         if(mode == MODE_POPULAR_ACTORS){
             holder.bind(actors.get(position));
         }
-        else if(mode == MODE_TRENDS) {
-            holder.bind(trends.get(position));
+        else if(mode == MODE_MOVIE) {
+            holder.bind(movies.get(position));
+        }
+        else if(mode == MODE_TV){
+            holder.bind(tvs.get(position));
         }
     }
 
@@ -61,14 +70,18 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void setActors(List<ActorModel> actors) {
         this.actors = actors;
     }
-    public void setTrends(List<TrendModel> trends) { this.trends = trends; }
+    public void setMovies(List<MovieModel> movies) { this.movies = movies; }
+    public void setTvs(List<TvModel> tvs) { this.tvs = tvs; }
     public void setMode(int mode){ this.mode = mode; }
 
     public void requestSwitchSelectedActorToTopActor(){
         activityViewListener.requestSwitchSelectedActor(0);
     }
-    public void requestSwitchSelectedTrendToTopTrend(){
-        activityViewListener.requestSwitchSelectedTrend(0);
+    public void requestSwitchSelectedMovieToTopMovie(){
+        activityViewListener.requestSwitchSelectedMovie(0);
+    }
+    public void requestSwitchSelectedMovieToTopTv(){
+        activityViewListener.requestSwitchSelectedTv(0);
     }
 
 }

@@ -8,16 +8,20 @@ import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.ActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TrendModel;
+import com.example.actorsearchapplication.models.TvModel;
 
 public class SelectedViewAdapter{
 
     public static final int MODE_SELECTED_ACTOR = 0;
-    public static final int MODE_SELECTED_TREND = 1;
+    public static final int MODE_SELECTED_MOVIE = 1;
+    public static final int MODE_SELECTED_TV = 2;
 
     private View selectedView;
     private ActorModel selectedActor;
-    private TrendModel selectedTrend;
+    private MovieModel selectedMovie;
+    private TvModel selectedTv;
     private SelectedViewHolder selectedViewHolder;
     private int mode;
 
@@ -30,15 +34,16 @@ public class SelectedViewAdapter{
 
     public void onBindView(){
         if(mode == MODE_SELECTED_ACTOR) bindOnSelectedActor();
-        else if( mode == MODE_SELECTED_TREND) bindOnSelectedTrend();
+        else if( mode == MODE_SELECTED_MOVIE) bindOnSelectedMovie();
+        else if ( mode == MODE_SELECTED_TV) bindOnSelectedTv();
     }
 
     public void setSelectedActor(ActorModel selectedActor) {
         this.selectedActor = selectedActor;
     }
-    public void setSelectedTrend(TrendModel selectedTrend){
-        this.selectedTrend = selectedTrend;
-    }
+    public void setSelectedMovie(MovieModel selectedMovie) { this.selectedMovie = selectedMovie; }
+    public void setSelectedTv(TvModel selectedTv) { this.selectedTv = selectedTv; }
+
     public void setSelectedView(View selectedView) {
         this.selectedView = selectedView;
     }
@@ -47,20 +52,14 @@ public class SelectedViewAdapter{
     }
 
     private void bindOnSelectedActor(){
-        selectedViewHolder.setActorId(selectedActor.getId());
-        selectedViewHolder.getSelectedName().setText(selectedActor.getName());
-        selectedViewHolder.getSelectedIconImageView().setImageResource(R.drawable.ic_heart);
-        selectedViewHolder.getSelectedPopularity().setText((Math.round(selectedActor.getPopularity()*10))/100.0+"");
-        Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+selectedActor.getProfilePath())
-                .into(selectedViewHolder.getSelectedImageView());
+       selectedViewHolder.onBind(selectedActor);
     }
 
-    private void bindOnSelectedTrend(){
-        // 트렌드 id set하기
-        selectedViewHolder.getSelectedName().setText(selectedTrend.getTitle());
-        selectedViewHolder.getSelectedPopularity().setText(selectedTrend.getVote_average()+"");
-        selectedViewHolder.getSelectedIconImageView().setImageResource(R.drawable.ic_star);
-        Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+selectedTrend.getPoster_path())
-                .into(selectedViewHolder.getSelectedImageView());
+    private void bindOnSelectedMovie(){
+        selectedViewHolder.onBind(selectedMovie);
+    }
+
+    private void bindOnSelectedTv(){
+        selectedViewHolder.onBind(selectedTv);
     }
 }

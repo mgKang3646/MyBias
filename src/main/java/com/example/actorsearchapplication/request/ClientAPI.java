@@ -4,13 +4,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.FilmographyModel;
-import com.example.actorsearchapplication.models.TrendModel;
+import com.example.actorsearchapplication.models.MovieModel;
+import com.example.actorsearchapplication.models.TvModel;
 import com.example.actorsearchapplication.runnable.ActorDetailRunnable;
 import com.example.actorsearchapplication.runnable.CancelRunnable;
 import com.example.actorsearchapplication.runnable.ActorPopularRunnable;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.runnable.FilmographyRunnable;
-import com.example.actorsearchapplication.runnable.TrendRunnable;
+import com.example.actorsearchapplication.runnable.MovieRunnable;
+import com.example.actorsearchapplication.runnable.TvRunnable;
 import com.example.actorsearchapplication.utils.MVVMFactory;
 import com.example.actorsearchapplication.utils.RequestExecutor;
 
@@ -27,9 +29,15 @@ public class ClientAPI {
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
-    public void requestTrends(){
-        TrendRunnable trendRunnable = new TrendRunnable(this);
-        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(trendRunnable);
+    public void requestMovies(){
+        MovieRunnable movieRunnable = new MovieRunnable(this);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(movieRunnable);
+        MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
+    public void requestTvs(){
+        TvRunnable tvRunnable = new TvRunnable(this);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(tvRunnable);
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
@@ -49,8 +57,12 @@ public class ClientAPI {
         return MVVMFactory.getMainRepository().getPopularActors();
     }
 
-    public MutableLiveData<List<TrendModel>> getTrends(){
-        return MVVMFactory.getMainRepository().getTrends();
+    public MutableLiveData<List<MovieModel>> getMovies(){
+        return MVVMFactory.getMainRepository().getMovies();
+    }
+
+    public MutableLiveData<List<TvModel>> getTvs(){
+        return MVVMFactory.getMainRepository().getTvs();
     }
 
     public MutableLiveData<ActorDetailModel> getActorDetail(){

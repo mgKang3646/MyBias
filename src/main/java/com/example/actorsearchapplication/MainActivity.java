@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,43 +20,47 @@ import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.adapters.SelectedViewAdapter;
 import com.example.actorsearchapplication.models.UrlModel;
 import com.example.actorsearchapplication.observer.ActorPopularObserver;
+import com.example.actorsearchapplication.observer.MovieObserver;
 import com.example.actorsearchapplication.observer.SelectedActorObserver;
-import com.example.actorsearchapplication.observer.SelectedTrendObserver;
-import com.example.actorsearchapplication.observer.TrendObserver;
+import com.example.actorsearchapplication.observer.SelectedMovieObserver;
+import com.example.actorsearchapplication.observer.SelectedTvObserver;
+import com.example.actorsearchapplication.observer.TvObserver;
 import com.example.actorsearchapplication.viewmodels.ListViewModel;
 import com.example.actorsearchapplication.viewmodels.SelectedViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 import com.example.actorsearchapplication.viewutil.TabLayoutHandler;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-;
+import com.google.android.material.textfield.TextInputLayout;
 
-// 뷰 홀더 공유하기
+
 public class MainActivity extends AppCompatActivity implements ActivityViewListener {
 
-    LinearLayout selected_parent_layout;
 
     // 뷰 컴포넌트
     TabLayout tab;
     TabItem tabItem_popularActor, tabItem_trend, tabItem_myActor;
     ImageButton search_button;
+    Button category_button;
     RecyclerView recyclerView;
     View selectedView;
+    LinearLayout layout_parent_selected;
 
     //어댑터
     MainRecyclerViewAdapter mainRecyclerViewAdapter;
     SelectedViewAdapter selectedViewAdapter;
-
+    ArrayAdapter<String> stringArrayAdapter;
     // 뷰모델
     ListViewModel listViewModel;
     SelectedViewModel selectedViewModel;
+
+    String[] items = {"영화", "시리즈"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createStatusBar();
         setContentView(R.layout.activity_main);
-
         onSettingView();
         onSettingViewModel();
 
@@ -61,13 +69,28 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 101){ // 카테고리 설정
+            int mode = data.getIntExtra("category",-1); // -1은 그냥 종료한 경우
+            if(mode == MainRecyclerViewAdapter.MODE_MOVIE) listViewModel.requestMovies();
+            else if(mode == MainRecyclerViewAdapter.MODE_TV) listViewModel.requestTvs();
+        }
+    }
+
+    @Override
     public void requestSwitchSelectedActor(int position) {
         selectedViewModel.switchSelectedActor(position);
     }
 
     @Override
-    public void requestSwitchSelectedTrend(int position){
-        selectedViewModel.switchSelectedTrend(position);
+    public void requestSwitchSelectedMovie(int position){
+        selectedViewModel.switchSelectedMovie(position);
+    }
+
+    @Override
+    public void requestSwitchSelectedTv(int position) {
+        selectedViewModel.switchSelectedTv(position);
     }
 
     @Override
@@ -96,14 +119,17 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
     }
 
     private void onBindViewComponents(){
+
+        layout_parent_selected = findViewById(R.id.layout_parent_selected);
+        recyclerView = findViewById(R.id.recyclerView);
+        selectedView = View.inflate(getApplicationContext(),R.layout.layout_recycler_selected,layout_parent_selected);
+
         tab = findViewById(R.id.tab);
         tabItem_myActor = findViewById(R.id.tabItem_myActor);
         tabItem_popularActor = findViewById(R.id.tabItem_popularActor);
         tabItem_trend = findViewById(R.id.tabItem_trend);
         search_button = findViewById(R.id.search_button);
-        recyclerView = findViewById(R.id.recyclerView);
-        selected_parent_layout = findViewById(R.id.selected_parent_layout);
-        selectedView = View.inflate(getApplicationContext(),R.layout.layout_recycler_selected,selected_parent_layout);
+        category_button = findViewById(R.id.category_button);
     }
 
     private void createAdapter(){
@@ -112,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
     }
 
     private void onBindViewAndAdapter(){
+        stringArrayAdapter = new ArrayAdapter<>(this,R.layout.trend_list,items);
         recyclerView.setAdapter(mainRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         selectedViewAdapter.setSelectedView(selectedView);
@@ -124,11 +151,12 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
 
     private void doObserve(){
         listViewModel.getPopularActors().observe(this,new ActorPopularObserver(mainRecyclerViewAdapter));
-        listViewModel.getTrends().observe(this,new TrendObserver(mainRecyclerViewAdapter));
+        listViewModel.getMovies().observe(this,new MovieObserver(mainRecyclerViewAdapter));
+        listViewModel.getTvs().observe(this,new TvObserver(mainRecyclerViewAdapter));
         selectedViewModel.getSelectedActor().observe(this,new SelectedActorObserver(selectedViewAdapter));
-        selectedViewModel.getSelectedTrend().observe(this,new SelectedTrendObserver(selectedViewAdapter));
+        selectedViewModel.getSelectedMovie().observe(this,new SelectedMovieObserver(selectedViewAdapter));
+        selectedViewModel.getSelectedTv().observe(this,new SelectedTvObserver(selectedViewAdapter));
     }
-
     private void requestDefaultProcessToViewModel(){
         UrlModel.setPage("1"); // 분리시켜야함
         listViewModel.requestPopularActors();
@@ -138,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
         tab.addOnTabSelectedListener(new TabLayoutHandler(listViewModel));
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(search_button);
+        buttonClickHandler.setOnClickEvent(category_button);
     }
+
+
 
 }

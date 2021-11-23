@@ -33,11 +33,11 @@ public class ActorDetailViewHolder {
             @Override
             public void onClick(View view) {
                 if(isClickedAddOverView){
-                    tv_add_overview_actor.setText("+더보기");
+                    tv_add_overview_actor.setText("+ 더보기");
                     tv_overview_actor.setText("");
                     isClickedAddOverView = false;
                 }else{
-                    tv_add_overview_actor.setText("-더보기");
+                    tv_add_overview_actor.setText("- 더보기");
                     tv_overview_actor.setText(overView);
                     isClickedAddOverView = true;
                 }

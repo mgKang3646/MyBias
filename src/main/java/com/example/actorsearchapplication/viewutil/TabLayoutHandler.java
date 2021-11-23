@@ -16,7 +16,7 @@ public class TabLayoutHandler implements TabLayout.OnTabSelectedListener {
     public void onTabSelected(TabLayout.Tab tab) {
         UrlModel.setPage("1");
         if(tab.getPosition() == 0) listViewModel.requestPopularActors();
-        else if(tab.getPosition() == 1) listViewModel.requestTrends();
+        else if(tab.getPosition() == 1) listViewModel.requestMovies();
     }
 
     @Override

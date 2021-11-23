@@ -2,10 +2,13 @@ package com.example.actorsearchapplication.viewutil;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.actorsearchapplication.CategoryActivity;
+import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.SearchActivity;
 
@@ -20,8 +23,20 @@ public class ButtonClickHandler {
     public void setOnClickEvent(ImageButton button){
         setOnClick(button);
     }
+    public void setOnClickEvent(Button button){
+        setOnClick(button);
+    }
 
     private void setOnClick(ImageButton button){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setEachButtonClickEvent(button);
+            }
+        });
+    }
+
+    private void setOnClick(Button button){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,6 +49,11 @@ public class ButtonClickHandler {
         if(button.getId() == R.id.search_button) setSearchButtonClickEvent();
         else if(button.getId() == R.id.backButton) setBackButtonClickEvent();
         else if(button.getId() == R.id.backButton_actor) setBackButtonActionClickEvent();
+    }
+
+    private void setEachButtonClickEvent(Button button){
+        if(button.getId() == R.id.category_button) setCategoryButtonClickEvent();
+
     }
 
     private void setSearchButtonClickEvent(){
@@ -52,4 +72,8 @@ public class ButtonClickHandler {
         activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
+    private void setCategoryButtonClickEvent(){
+        Intent intent = new Intent(activity.getApplicationContext(), CategoryActivity.class);
+        activity.startActivityForResult(intent,101);
+    }
 }
