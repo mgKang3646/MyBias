@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.FilmographyModel;
+import com.example.actorsearchapplication.models.MovieDetailModel;
 import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TrendModel;
 import com.example.actorsearchapplication.models.TvModel;
@@ -20,6 +21,7 @@ public class MainRepository {
     private MutableLiveData<List<MovieModel>> movies;
     private MutableLiveData<List<TvModel>> tvs;
     private MutableLiveData<ActorDetailModel> actorDetail;
+    private MutableLiveData<MovieDetailModel> movieDetail;
     private MutableLiveData<List<FilmographyModel>> filmography;
 
 
@@ -29,6 +31,7 @@ public class MainRepository {
         this.tvs = new MutableLiveData<>();
         this.actorDetail = new MutableLiveData<>();
         this.filmography = new MutableLiveData<>();
+        this.movieDetail = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<ActorModel>> getPopularActors(){
@@ -38,14 +41,16 @@ public class MainRepository {
     public MutableLiveData<List<TvModel>> getTvs() { return tvs; }
     public MutableLiveData<List<FilmographyModel>> getFilmography() { return filmography; }
     public MutableLiveData<ActorDetailModel> getActorDetail() { return actorDetail; }
+    public MutableLiveData<MovieDetailModel> getMovieDetail(){ return movieDetail;}
 
     public void requestPopularActors(){
         MVVMFactory.getClientAPI().requestPopularActors();
     }
-    public void requestActorDetail(int id) { MVVMFactory.getClientAPI().requestActorDetail(id);}
     public void requestMovies(){ MVVMFactory.getClientAPI().requestMovies(); }
     public void requestTvs() { MVVMFactory.getClientAPI().requestTvs(); }
     public void requestFilmography(int id){ MVVMFactory.getClientAPI().requestFilmography(id); }
+    public void requestActorDetail(int id) { MVVMFactory.getClientAPI().requestActorDetail(id);}
+    public void requestMovieDetail(int id) { MVVMFactory.getClientAPI().requestMovieDetail(id);}
 
     public ActorModel getSelectedActor(int position){ return popularActors.getValue().get(position); }
     public MovieModel getSelectedMovie(int position){ return movies.getValue().get(position);}

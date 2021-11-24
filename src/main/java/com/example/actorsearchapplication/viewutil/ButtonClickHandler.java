@@ -47,7 +47,6 @@ public class ButtonClickHandler {
     private void setEachButtonClickEvent(ImageButton button){
         if(button.getId() == R.id.search_button) setSearchButtonClickEvent();
         else if(button.getId() == R.id.backButton) setBackButtonClickEvent();
-        else if(button.getId() == R.id.backButton_actor) setBackButtonActionClickEvent();
     }
 
     private void setEachButtonClickEvent(Button button){
@@ -62,11 +61,6 @@ public class ButtonClickHandler {
     }
 
     private void setBackButtonClickEvent(){
-        activity.finish();
-        activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-    }
-
-    private void setBackButtonActionClickEvent(){
         activity.finish();
         activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }

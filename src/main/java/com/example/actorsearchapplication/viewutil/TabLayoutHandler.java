@@ -2,28 +2,29 @@ package com.example.actorsearchapplication.viewutil;
 
 import android.view.View;
 
+import com.example.actorsearchapplication.ActivityViewListener;
 import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.models.UrlModel;
 import com.google.android.material.tabs.TabLayout;
 
 public class TabLayoutHandler implements TabLayout.OnTabSelectedListener {
 
-    private MainActivity activity;
+    private ActivityViewListener activityViewListener;
 
-    public TabLayoutHandler(MainActivity activity){
-        this.activity = activity;
+    public TabLayoutHandler(ActivityViewListener activityViewListener){
+        this.activityViewListener = activityViewListener;
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         UrlModel.setPage("1");
         if(tab.getPosition() == 0){
-            activity.getCategory_button().setVisibility(View.INVISIBLE);
-            activity.getListViewModel().requestPopularActors();
+            activityViewListener.getCategoryButton().setVisibility(View.INVISIBLE);
+            activityViewListener.getListViewModel().requestPopularActors();
         }
         else if(tab.getPosition() == 1) {
-            activity.getCategory_button().setVisibility(View.VISIBLE);
-            activity.getListViewModel().requestMovies();
+            activityViewListener.getCategoryButton().setVisibility(View.VISIBLE);
+            activityViewListener.getListViewModel().requestMovies();
         }
     }
 

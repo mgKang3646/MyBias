@@ -45,11 +45,6 @@ public class ActorDetailViewHolder {
         });
     }
 
-    public ImageView getIv_actor() { return iv_actor; }
-    public TextView getTv_popularity_actor() { return tv_popularity_actor; }
-    public TextView getTv_name_actor() { return tv_name_actor; }
-    public TextView getTv_birth_actor() { return tv_birth_actor; }
-
     public void onBind(ActorDetailModel actorDetailModel){
         overView = actorDetailModel.getBiography(); //OverView 한 단락으로 줄이기
         tv_birth_actor.setText(actorDetailModel.getBirthday());

@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
     RecyclerView recyclerView;
     View selectedView;
     LinearLayout layout_parent_selected;
-
     //어댑터
     MainRecyclerViewAdapter mainRecyclerViewAdapter;
     SelectedViewAdapter selectedViewAdapter;
@@ -63,11 +62,8 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
         setContentView(R.layout.activity_main);
         onSettingView();
         onSettingViewModel();
-
         setViewEvent();
-
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -77,22 +73,18 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
             else if(mode == MainRecyclerViewAdapter.MODE_TV) listViewModel.requestTvs();
         }
     }
-
     @Override
     public void requestSwitchSelectedActor(int position) {
         selectedViewModel.switchSelectedActor(position);
     }
-
     @Override
     public void requestSwitchSelectedMovie(int position){
         selectedViewModel.switchSelectedMovie(position);
     }
-
     @Override
     public void requestSwitchSelectedTv(int position) {
         selectedViewModel.switchSelectedTv(position);
     }
-
     @Override
     public void moveActorDetailPage(int id) {
         Intent intent = new Intent(getApplicationContext(), ActorDetailActivity.class);
@@ -101,11 +93,26 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
+    @Override
+    public void moveMovieDetailPage(int id) {
+        Intent intent = new Intent(getApplicationContext(), MovieDetailActivity.class);
+        intent.putExtra("movie_id",id);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    @Override
+    public void moveTVDetailPage(int id) {
+
+    }
+
+    @Override
     public ListViewModel getListViewModel(){
         return listViewModel;
     }
 
-    public Button getCategory_button(){
+    @Override
+    public Button getCategoryButton(){
         return category_button;
     }
 

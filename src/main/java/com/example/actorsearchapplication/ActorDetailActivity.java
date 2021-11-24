@@ -19,7 +19,7 @@ import com.example.actorsearchapplication.viewmodels.ActorDetailViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 
 public class ActorDetailActivity extends AppCompatActivity {
-    ImageButton imageButton;
+    ImageButton backButton;
     RecyclerView recyclerView_filmography;
 
     private int id;
@@ -35,13 +35,13 @@ public class ActorDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         createStatusBar();
         setContentView(R.layout.activity_actor_detail);
-        imageButton = findViewById(R.id.backButton_actor);
+        backButton = findViewById(R.id.backButton);
         recyclerView_filmography = findViewById(R.id.recyclerView_filmography);
         layout_parent_actor_detail = findViewById(R.id.layout_parent_actor_detail);
         layout_parent_filmography = findViewById(R.id.layout_parent_filmography);
 
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
-        buttonClickHandler.setOnClickEvent(imageButton);
+        buttonClickHandler.setOnClickEvent(backButton);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("actor_id",-1); // 예외처리 해야됨

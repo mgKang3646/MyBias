@@ -21,9 +21,6 @@
             android:exported="false"
             android:theme="@style/Transparent" />
         <activity
-            android:name=".adapters.TrendDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".ActorDetailActivity"
             android:exported="false" />
         <activity

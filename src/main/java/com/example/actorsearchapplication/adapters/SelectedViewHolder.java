@@ -40,10 +40,10 @@ public class SelectedViewHolder {
                     activityViewListener.moveActorDetailPage(id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_MOVIE){
-
+                    activityViewListener.moveMovieDetailPage(id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_TV){
-
+                    activityViewListener.moveTVDetailPage(id);
                 }
             }
         });

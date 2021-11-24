@@ -9,7 +9,7 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/toolbar_actor" />
+    <include layout="@layout/toolbar_simple" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.actorsearchapplication.utils;
 import com.example.actorsearchapplication.response.ActorDetailResponse;
 import com.example.actorsearchapplication.response.FilmographyResponse;
+import com.example.actorsearchapplication.response.MovieDetailResponse;
 import com.example.actorsearchapplication.response.MoviePopularResponse;
 import com.example.actorsearchapplication.response.SearchPopularActorResponse;
 import com.example.actorsearchapplication.response.TvPopularResponse;
@@ -39,6 +40,12 @@ public interface RestAPI {
     @GET("person/{person_id}/combined_credits")
     Call<FilmographyResponse> getFlimography(
             @Path("person_id") int actor_id,
+            @Query("api_key") String api_key
+    );
+
+    @GET("movie/{movie_id}")
+    Call<MovieDetailResponse> getMovieDetail(
+            @Path("movie_id" ) int movie_id,
             @Query("api_key") String api_key
     );
 

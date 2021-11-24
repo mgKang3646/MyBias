@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.FilmographyModel;
+import com.example.actorsearchapplication.models.MovieDetailModel;
 import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TvModel;
 import com.example.actorsearchapplication.runnable.ActorDetailRunnable;
@@ -11,6 +12,7 @@ import com.example.actorsearchapplication.runnable.CancelRunnable;
 import com.example.actorsearchapplication.runnable.ActorPopularRunnable;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.runnable.FilmographyRunnable;
+import com.example.actorsearchapplication.runnable.MovieDetailRunnable;
 import com.example.actorsearchapplication.runnable.MovieRunnable;
 import com.example.actorsearchapplication.runnable.TvRunnable;
 import com.example.actorsearchapplication.utils.MVVMFactory;
@@ -53,6 +55,12 @@ public class ClientAPI {
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
+    public void requestMovieDetail(int id){
+        MovieDetailRunnable movieDetailRunnable = new MovieDetailRunnable(this,id);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(movieDetailRunnable);
+        MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
     public MutableLiveData<List<ActorModel>> getPopularActors() {
         return MVVMFactory.getMainRepository().getPopularActors();
     }
@@ -68,9 +76,11 @@ public class ClientAPI {
     public MutableLiveData<ActorDetailModel> getActorDetail(){
         return MVVMFactory.getMainRepository().getActorDetail();
     }
+    public MutableLiveData<MovieDetailModel> getMovieDetail(){
+        return MVVMFactory.getMainRepository().getMovieDetail();
+    }
 
     public MutableLiveData<List<FilmographyModel>> getFilmography(){
         return MVVMFactory.getMainRepository().getFilmography();
     }
-
 }
