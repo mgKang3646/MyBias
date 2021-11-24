@@ -101,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
+    public ListViewModel getListViewModel(){
+        return listViewModel;
+    }
+
+    public Button getCategory_button(){
+        return category_button;
+    }
+
     private void onSettingView(){
         onBindViewComponents();
         createAdapter();
@@ -130,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
         tabItem_trend = findViewById(R.id.tabItem_trend);
         search_button = findViewById(R.id.search_button);
         category_button = findViewById(R.id.category_button);
+        category_button.setVisibility(View.INVISIBLE);
     }
 
     private void createAdapter(){
@@ -163,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
     }
 
     private void setViewEvent(){
-        tab.addOnTabSelectedListener(new TabLayoutHandler(listViewModel));
+        tab.addOnTabSelectedListener(new TabLayoutHandler(this));
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(search_button);
         buttonClickHandler.setOnClickEvent(category_button);

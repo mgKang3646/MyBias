@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.actorsearchapplication.CategoryActivity;
-import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.SearchActivity;
 

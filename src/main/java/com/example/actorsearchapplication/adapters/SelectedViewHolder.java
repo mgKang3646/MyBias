@@ -21,6 +21,7 @@ public class SelectedViewHolder {
     View selectedView;
 
     private int id;
+    private int mode;
 
     public SelectedViewHolder(View selectedView, ActivityViewListener activityViewListener) {
         selectedImageView = selectedView.findViewById(R.id.iv_selected);
@@ -35,29 +36,22 @@ public class SelectedViewHolder {
         selectedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activityViewListener.moveActorDetailPage(id);
+                if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS){
+                    activityViewListener.moveActorDetailPage(id);
+                }
+                else if(mode == MainRecyclerViewAdapter.MODE_MOVIE){
+
+                }
+                else if(mode == MainRecyclerViewAdapter.MODE_TV){
+
+                }
             }
         });
     }
 
-    public void setActorId(int id){
-        this.id = id;
-    }
-    public ImageView getSelectedImageView() {
-        return selectedImageView;
-    }
-    public ImageView getSelectedIconImageView() {
-        return selectedIconImageView;
-    }
-    public TextView getSelectedName() {
-        return selectedName;
-    }
-    public TextView getSelectedPopularity() {
-        return selectedPopularity;
-    }
-
     public void onBind(ActorModel actorModel){
         id = actorModel.getId();
+        mode = MainRecyclerViewAdapter.MODE_POPULAR_ACTORS;
         selectedName.setText(actorModel.getName());
         selectedPopularity.setText((Math.round(actorModel.getPopularity()*10))/100.0+"");
         selectedIconImageView.setImageResource(R.drawable.ic_heart);
@@ -67,6 +61,7 @@ public class SelectedViewHolder {
 
     public void onBind(MovieModel movieModel){
         id = movieModel.getId();
+        mode = MainRecyclerViewAdapter.MODE_MOVIE;
         selectedName.setText(movieModel.getTitle());
         selectedPopularity.setText(movieModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
@@ -76,6 +71,7 @@ public class SelectedViewHolder {
 
     public void onBind(TvModel tvModel){
         id = tvModel.getId();
+        mode = MainRecyclerViewAdapter.MODE_TV;
         selectedName.setText(tvModel.getName());
         selectedPopularity.setText(tvModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
