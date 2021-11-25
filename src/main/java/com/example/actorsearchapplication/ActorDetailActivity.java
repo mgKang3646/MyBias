@@ -28,7 +28,6 @@ public class ActorDetailActivity extends AppCompatActivity {
     private FilmographyRecyclerAdapter filmographyRecyclerAdapter;
     private View actorDetailView;
     private LinearLayout layout_parent_actor_detail;
-    private LinearLayout layout_parent_filmography;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class ActorDetailActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         recyclerView_filmography = findViewById(R.id.recyclerView_filmography);
         layout_parent_actor_detail = findViewById(R.id.layout_parent_actor_detail);
-        layout_parent_filmography = findViewById(R.id.layout_parent_filmography);
 
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(backButton);

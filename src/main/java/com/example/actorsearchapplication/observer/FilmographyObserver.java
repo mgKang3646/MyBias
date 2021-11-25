@@ -1,5 +1,7 @@
 package com.example.actorsearchapplication.observer;
 
+import android.util.Log;
+
 import androidx.lifecycle.Observer;
 
 import com.example.actorsearchapplication.adapters.FilmographyRecyclerAdapter;
@@ -17,7 +19,11 @@ public class FilmographyObserver implements Observer<List<FilmographyModel>>   {
 
     @Override
     public void onChanged(List<FilmographyModel> filmography) {
-        filmographyRecyclerAdapter.setFilmography(filmography);
-        filmographyRecyclerAdapter.notifyDataSetChanged();
+        if(filmography != null){
+            filmographyRecyclerAdapter.setFilmography(filmography);
+            filmographyRecyclerAdapter.notifyDataSetChanged();
+        }else{
+            Log.v("Tag","FilmographyObserver : List<FilmographyModel> is Null");
+        }
     }
 }

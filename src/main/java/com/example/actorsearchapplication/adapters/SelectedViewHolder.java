@@ -55,8 +55,13 @@ public class SelectedViewHolder {
         selectedName.setText(actorModel.getName());
         selectedPopularity.setText((Math.round(actorModel.getPopularity()*10))/100.0+"");
         selectedIconImageView.setImageResource(R.drawable.ic_heart);
-        Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorModel.getProfilePath())
-                .into(selectedImageView);
+        if(actorModel.getProfile_path() != null){ //Gilde 분리하기
+            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorModel.getProfile_path())
+                    .into(selectedImageView);
+        }else{
+            selectedImageView.setImageResource(R.drawable.default_image);
+        }
+
     }
 
     public void onBind(MovieModel movieModel){
@@ -65,8 +70,13 @@ public class SelectedViewHolder {
         selectedName.setText(movieModel.getTitle());
         selectedPopularity.setText(movieModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
-        Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+movieModel.getPoster_path())
-                .into(selectedImageView);
+        if(movieModel.getPoster_path() != null){
+            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+movieModel.getPoster_path())
+                    .into(selectedImageView);
+        }else{
+            selectedImageView.setImageResource(R.drawable.default_image);
+        }
+
     }
 
     public void onBind(TvModel tvModel){
@@ -75,8 +85,12 @@ public class SelectedViewHolder {
         selectedName.setText(tvModel.getName());
         selectedPopularity.setText(tvModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
-        Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+tvModel.getPoster_path())
-                .into(selectedImageView);
+        if(tvModel.getPoster_path() != null){
+            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+tvModel.getPoster_path())
+                    .into(selectedImageView);
+        }else{
+            selectedImageView.setImageResource(R.drawable.default_image);
+        }
     }
 
 }

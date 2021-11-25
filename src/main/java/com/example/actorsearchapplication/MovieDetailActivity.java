@@ -1,6 +1,7 @@
 package com.example.actorsearchapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.actorsearchapplication.adapters.CastingRecyclerAdapter;
 import com.example.actorsearchapplication.adapters.MovieDetailViewAdapter;
+import com.example.actorsearchapplication.observer.CastingObserver;
 import com.example.actorsearchapplication.observer.MovieDetailObserver;
 import com.example.actorsearchapplication.viewmodels.MovieDetailViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
@@ -20,18 +23,22 @@ public class MovieDetailActivity extends AppCompatActivity {
     private ImageButton backButton;
     private LinearLayout layout_parent_movie_detail;
     private View movieDetailView;
-    private int id;
-
+    private RecyclerView recyclerViewCasting;
+    private CastingRecyclerAdapter castingRecyclerAdapter;
     private MovieDetailViewModel movieDetailViewModel;
     private MovieDetailViewAdapter movieDetailViewAdapter;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createStatusBar();
         setContentView(R.layout.activity_movie_detail);
+
         backButton = findViewById(R.id.backButton);
         layout_parent_movie_detail = findViewById(R.id.layout_parent_movie_detail);
+        recyclerViewCasting = findViewById(R.id.recycler_casting_movie);
+
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(backButton);
 
@@ -42,9 +49,16 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieDetailViewModel = new MovieDetailViewModel();
         movieDetailViewAdapter = new MovieDetailViewAdapter(movieDetailView);
+        castingRecyclerAdapter = new CastingRecyclerAdapter();
+
+        recyclerViewCasting.setAdapter(castingRecyclerAdapter);
+        recyclerViewCasting.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
         movieDetailViewModel.getMovieDetail().observe(this,new MovieDetailObserver(movieDetailViewAdapter));
+        movieDetailViewModel.getCasting().observe(this,new CastingObserver(castingRecyclerAdapter));
 
         movieDetailViewModel.requestMovieDetail(id);
+        movieDetailViewModel.requestCasting(id);
 
     }
 

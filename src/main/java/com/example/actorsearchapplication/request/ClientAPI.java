@@ -11,6 +11,7 @@ import com.example.actorsearchapplication.runnable.ActorDetailRunnable;
 import com.example.actorsearchapplication.runnable.CancelRunnable;
 import com.example.actorsearchapplication.runnable.ActorPopularRunnable;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.runnable.CastingRunnable;
 import com.example.actorsearchapplication.runnable.FilmographyRunnable;
 import com.example.actorsearchapplication.runnable.MovieDetailRunnable;
 import com.example.actorsearchapplication.runnable.MovieRunnable;
@@ -61,26 +62,31 @@ public class ClientAPI {
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
+    public void requestCasting(int id){
+        CastingRunnable castingRunnable = new CastingRunnable(this,id);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(castingRunnable);
+        MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
     public MutableLiveData<List<ActorModel>> getPopularActors() {
         return MVVMFactory.getMainRepository().getPopularActors();
     }
-
     public MutableLiveData<List<MovieModel>> getMovies(){
         return MVVMFactory.getMainRepository().getMovies();
     }
-
     public MutableLiveData<List<TvModel>> getTvs(){
         return MVVMFactory.getMainRepository().getTvs();
     }
-
     public MutableLiveData<ActorDetailModel> getActorDetail(){
         return MVVMFactory.getMainRepository().getActorDetail();
     }
     public MutableLiveData<MovieDetailModel> getMovieDetail(){
         return MVVMFactory.getMainRepository().getMovieDetail();
     }
-
     public MutableLiveData<List<FilmographyModel>> getFilmography(){
         return MVVMFactory.getMainRepository().getFilmography();
+    }
+    public MutableLiveData<List<ActorModel>> getCasting(){
+        return MVVMFactory.getMainRepository().getCasting();
     }
 }

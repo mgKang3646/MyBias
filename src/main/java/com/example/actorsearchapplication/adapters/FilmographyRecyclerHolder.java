@@ -28,8 +28,13 @@ public class FilmographyRecyclerHolder extends RecyclerView.ViewHolder{
     public void onBind(FilmographyModel filmographyModel){
         iconImage.setImageResource(R.drawable.ic_star);
         popularity.setText(Math.round(filmographyModel.getPopularity()*10)/100.0+"");
-        Glide.with(itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w300/"+filmographyModel.getPoster_path()).into(mainImage);
+        if(filmographyModel.getPoster_path() != null){
+            Glide.with(itemView.getContext())
+                    .load("https://image.tmdb.org/t/p/w300/"+filmographyModel.getPoster_path()).into(mainImage);
+        }else{
+            mainImage.setImageResource(R.drawable.default_image);
+        }
+
     }
 
 

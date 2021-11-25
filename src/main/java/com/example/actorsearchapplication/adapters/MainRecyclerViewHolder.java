@@ -50,22 +50,35 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
     public void bind(ActorModel popularActor){
         popularity.setText(Math.round(popularActor.getPopularity()*10)/100.0+"");
         iconImage.setImageResource(R.drawable.ic_heart);
-        Glide.with(itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w300/"+popularActor.getProfilePath()).into(mainImage);
+        if(popularActor.getProfile_path() != null){ // 메소드 분리 하기, 중복코드
+            Glide.with(itemView.getContext())
+                    .load("https://image.tmdb.org/t/p/w300/"+popularActor.getProfile_path()).into(mainImage);
+        }else{
+            mainImage.setImageResource(R.drawable.default_image);
+        }
     }
 
     public void bind(MovieModel movie){
         popularity.setText(movie.getVote_average()+"");
         iconImage.setImageResource(R.drawable.ic_star);
-        Glide.with(itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w300/"+movie.getPoster_path()).into(mainImage);
+        if(movie.getPoster_path() != null){
+            Glide.with(itemView.getContext())
+                    .load("https://image.tmdb.org/t/p/w300/"+movie.getPoster_path()).into(mainImage);
+        }else{
+            mainImage.setImageResource(R.drawable.default_image);
+        }
+
     }
 
     public void bind(TvModel tv){
         popularity.setText(tv.getVote_average()+"");
         iconImage.setImageResource(R.drawable.ic_star);
-        Glide.with(itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w300/"+tv.getPoster_path()).into(mainImage);
+        if(tv.getPoster_path() != null){
+            Glide.with(itemView.getContext())
+                    .load("https://image.tmdb.org/t/p/w300/"+tv.getPoster_path()).into(mainImage);
+        }else{
+            mainImage.setImageResource(R.drawable.default_image);
+        }
     }
 }
 

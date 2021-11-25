@@ -1,5 +1,6 @@
 package com.example.actorsearchapplication.utils;
 import com.example.actorsearchapplication.response.ActorDetailResponse;
+import com.example.actorsearchapplication.response.CastingResponse;
 import com.example.actorsearchapplication.response.FilmographyResponse;
 import com.example.actorsearchapplication.response.MovieDetailResponse;
 import com.example.actorsearchapplication.response.MoviePopularResponse;
@@ -49,6 +50,9 @@ public interface RestAPI {
             @Query("api_key") String api_key
     );
 
-
-
+    @GET("movie/{movie_id}/credits")
+    Call<CastingResponse> getCasting(
+            @Path("movie_id" ) int movie_id,
+            @Query("api_key") String api_key
+    );
 }
