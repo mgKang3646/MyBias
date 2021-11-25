@@ -1,44 +1,40 @@
 package com.example.actorsearchapplication.adapters;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.actorsearchapplication.ActivityViewListener;
+import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
-import com.example.actorsearchapplication.models.TrendModel;
 import com.example.actorsearchapplication.models.TvModel;
 
 public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
 
     private ImageView mainImage, iconImage;
     private TextView popularity;
-    private ActivityViewListener activityViewListener;
+    private MainActivityViewListener mainActivityViewListener;
     private int mode;
 
 
-    public MainRecyclerViewHolder(@NonNull View itemView, ActivityViewListener activityViewListener) {
+    public MainRecyclerViewHolder(@NonNull View itemView, MainActivityViewListener mainActivityViewListener) {
         super(itemView);
         mainImage = itemView.findViewById(R.id.iv_holder);
         iconImage = itemView.findViewById(R.id.iv_ic_holder);
         popularity = itemView.findViewById(R.id.tv_popularity_holder);
-        this.activityViewListener = activityViewListener;
+        this.mainActivityViewListener = mainActivityViewListener;
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS) activityViewListener.requestSwitchSelectedActor(getAdapterPosition());
-                else if ( mode == MainRecyclerViewAdapter.MODE_MOVIE) activityViewListener.requestSwitchSelectedMovie(getAdapterPosition());
-                else if ( mode == MainRecyclerViewAdapter.MODE_TV ) activityViewListener.requestSwitchSelectedTv(getAdapterPosition());
+                if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS) mainActivityViewListener.requestSwitchSelectedActor(getAdapterPosition());
+                else if ( mode == MainRecyclerViewAdapter.MODE_MOVIE) mainActivityViewListener.requestSwitchSelectedMovie(getAdapterPosition());
+                else if ( mode == MainRecyclerViewAdapter.MODE_TV ) mainActivityViewListener.requestSwitchSelectedTv(getAdapterPosition());
             }
         });
     }
@@ -48,7 +44,7 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void bind(ActorModel popularActor){
-        popularity.setText(Math.round(popularActor.getPopularity()*10)/100.0+"");
+        popularity.setText(Math.round(popularActor.getPopularity()*10)/10.0+"");
         iconImage.setImageResource(R.drawable.ic_heart);
         if(popularActor.getProfile_path() != null){ // 메소드 분리 하기, 중복코드
             Glide.with(itemView.getContext())

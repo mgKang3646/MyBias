@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.actorsearchapplication.ActivityClickListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
 
@@ -16,12 +17,17 @@ import java.util.List;
 public class CastingRecyclerAdapter extends RecyclerView.Adapter<CastingRecyclerHolder> {
 
     private List<ActorModel> casting;
+    private ActivityClickListener activityClickListener;
+
+    public CastingRecyclerAdapter(ActivityClickListener activityClickListener){
+        this.activityClickListener = activityClickListener;
+    }
 
     @NonNull
     @Override
     public CastingRecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycler_holder,parent,false);
-        return new CastingRecyclerHolder(view);
+        return new CastingRecyclerHolder(view, activityClickListener);
     }
 
     @Override

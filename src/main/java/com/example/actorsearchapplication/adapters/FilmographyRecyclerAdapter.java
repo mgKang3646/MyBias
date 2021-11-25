@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.actorsearchapplication.ActivityClickListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.FilmographyModel;
 
@@ -16,11 +17,17 @@ public class FilmographyRecyclerAdapter extends RecyclerView.Adapter<Filmography
 
     private List<FilmographyModel> filmography;
 
+    private ActivityClickListener activityClickListener;
+
+    public FilmographyRecyclerAdapter(ActivityClickListener activityClickListener){
+        this.activityClickListener = activityClickListener;
+    }
+
     @NonNull
     @Override
     public FilmographyRecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycler_holder,parent,false);
-        return new FilmographyRecyclerHolder(view);
+        return new FilmographyRecyclerHolder(view,activityClickListener);
     }
 
     @Override

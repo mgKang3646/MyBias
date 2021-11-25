@@ -50,7 +50,7 @@ public class ActorDetailViewHolder {
         tv_birth_actor.setText(actorDetailModel.getBirthday());
         tv_birth_place_actor.setText(actorDetailModel.getPlace_of_birth());
         tv_name_actor.setText(actorDetailModel.getName());
-        tv_popularity_actor.setText(Math.round(actorDetailModel.getPopularity()*10)/100.0+"");
+        tv_popularity_actor.setText(Math.round(actorDetailModel.getPopularity()*10)/10.0+"");
         Glide.with(actorDetailView.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorDetailModel.getProfile_path())
                 .into(iv_actor);
     }

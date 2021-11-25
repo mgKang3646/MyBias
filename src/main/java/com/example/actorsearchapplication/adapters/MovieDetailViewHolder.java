@@ -66,7 +66,6 @@ public class MovieDetailViewHolder {
 
     private void setProductionRecyclerView(List<ProductionModel> productions){
         if(productions != null) {
-            Log.v("Tag","영화사 이미지 URL : " + productions.get(0).getLogo_path());
             ProductionRecyclerAdapter productionRecyclerAdapter = new ProductionRecyclerAdapter();
             productionRecyclerView.setAdapter(productionRecyclerAdapter);
             productionRecyclerView.setLayoutManager(new LinearLayoutManager(movieDetailView.getContext(),LinearLayoutManager.HORIZONTAL,false));

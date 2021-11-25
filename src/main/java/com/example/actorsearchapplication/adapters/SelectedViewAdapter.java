@@ -1,15 +1,11 @@
 package com.example.actorsearchapplication.adapters;
 
 
-import android.util.Log;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.example.actorsearchapplication.ActivityViewListener;
-import com.example.actorsearchapplication.R;
+import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
-import com.example.actorsearchapplication.models.TrendModel;
 import com.example.actorsearchapplication.models.TvModel;
 
 public class SelectedViewAdapter{
@@ -25,11 +21,11 @@ public class SelectedViewAdapter{
     private SelectedViewHolder selectedViewHolder;
     private int mode;
 
-    ActivityViewListener activityViewListener;
+    MainActivityViewListener mainActivityViewListener;
 
-    public SelectedViewAdapter(ActivityViewListener activityViewListener, View selectedView){
-        this.activityViewListener = activityViewListener;
-        this.selectedViewHolder = new SelectedViewHolder(selectedView,activityViewListener);
+    public SelectedViewAdapter(MainActivityViewListener mainActivityViewListener, View selectedView){
+        this.mainActivityViewListener = mainActivityViewListener;
+        this.selectedViewHolder = new SelectedViewHolder(selectedView, mainActivityViewListener);
     }
 
     public void onBindView(){

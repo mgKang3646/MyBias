@@ -1,12 +1,11 @@
 package com.example.actorsearchapplication.adapters;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.actorsearchapplication.ActivityViewListener;
+import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
@@ -17,19 +16,19 @@ public class SelectedViewHolder {
     ImageView selectedImageView, selectedIconImageView;
     TextView selectedName;
     TextView selectedPopularity;
-    ActivityViewListener activityViewListener;
+    MainActivityViewListener mainActivityViewListener;
     View selectedView;
 
     private int id;
     private int mode;
 
-    public SelectedViewHolder(View selectedView, ActivityViewListener activityViewListener) {
+    public SelectedViewHolder(View selectedView, MainActivityViewListener mainActivityViewListener) {
         selectedImageView = selectedView.findViewById(R.id.iv_selected);
         selectedName = selectedView.findViewById(R.id.tv_name_selected);
         selectedPopularity = selectedView.findViewById(R.id.tv_popularity_selected);
         selectedIconImageView = selectedView.findViewById(R.id.iv_ic_selected);
 
-        this.activityViewListener = activityViewListener;
+        this.mainActivityViewListener = mainActivityViewListener;
         this.selectedView = selectedView;
 
         //Actor냐 트렌드냐에 따라 구분되어야 함
@@ -37,13 +36,13 @@ public class SelectedViewHolder {
             @Override
             public void onClick(View view) {
                 if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS){
-                    activityViewListener.moveActorDetailPage(id);
+                    mainActivityViewListener.moveActorDetailPage(id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_MOVIE){
-                    activityViewListener.moveMovieDetailPage(id);
+                    mainActivityViewListener.moveMovieDetailPage(id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_TV){
-                    activityViewListener.moveTVDetailPage(id);
+                    mainActivityViewListener.moveTVDetailPage(id);
                 }
             }
         });
@@ -53,7 +52,7 @@ public class SelectedViewHolder {
         id = actorModel.getId();
         mode = MainRecyclerViewAdapter.MODE_POPULAR_ACTORS;
         selectedName.setText(actorModel.getName());
-        selectedPopularity.setText((Math.round(actorModel.getPopularity()*10))/100.0+"");
+        selectedPopularity.setText((Math.round(actorModel.getPopularity()*10))/10.0+"");
         selectedIconImageView.setImageResource(R.drawable.ic_heart);
         if(actorModel.getProfile_path() != null){ //Gilde 분리하기
             Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorModel.getProfile_path())

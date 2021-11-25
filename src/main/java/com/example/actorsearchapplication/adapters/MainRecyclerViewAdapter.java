@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.actorsearchapplication.ActivityViewListener;
+import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
-import com.example.actorsearchapplication.models.TrendModel;
 import com.example.actorsearchapplication.models.TvModel;
 
 import java.util.List;
@@ -30,19 +29,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private List<MovieModel> movies;
     private List<TvModel> tvs;
 
-    private ActivityViewListener activityViewListener;
+    private MainActivityViewListener mainActivityViewListener;
 
     private int mode = 0;
 
-    public MainRecyclerViewAdapter(ActivityViewListener activityViewListener){
-        this.activityViewListener = activityViewListener;
+    public MainRecyclerViewAdapter(MainActivityViewListener mainActivityViewListener){
+        this.mainActivityViewListener = mainActivityViewListener;
     }
 
     @NonNull
     @Override
     public MainRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycler_holder,parent,false);
-        return new MainRecyclerViewHolder(view,activityViewListener);
+        return new MainRecyclerViewHolder(view, mainActivityViewListener);
     }
 
     @Override
@@ -75,13 +74,13 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void setMode(int mode){ this.mode = mode; }
 
     public void requestSwitchSelectedActorToTopActor(){
-        activityViewListener.requestSwitchSelectedActor(0);
+        mainActivityViewListener.requestSwitchSelectedActor(0);
     }
     public void requestSwitchSelectedMovieToTopMovie(){
-        activityViewListener.requestSwitchSelectedMovie(0);
+        mainActivityViewListener.requestSwitchSelectedMovie(0);
     }
     public void requestSwitchSelectedMovieToTopTv(){
-        activityViewListener.requestSwitchSelectedTv(0);
+        mainActivityViewListener.requestSwitchSelectedTv(0);
     }
 
 }

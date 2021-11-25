@@ -3,7 +3,7 @@ package com.example.actorsearchapplication;
 import android.widget.Button;
 import com.example.actorsearchapplication.viewmodels.ListViewModel;
 
-public interface ActivityViewListener {
+public interface MainActivityViewListener {
 
     void requestSwitchSelectedActor(int position);
     void requestSwitchSelectedMovie(int position);

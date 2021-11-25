@@ -5,6 +5,7 @@ import com.example.actorsearchapplication.response.FilmographyResponse;
 import com.example.actorsearchapplication.response.MovieDetailResponse;
 import com.example.actorsearchapplication.response.MoviePopularResponse;
 import com.example.actorsearchapplication.response.SearchPopularActorResponse;
+import com.example.actorsearchapplication.response.TvDetailResponse;
 import com.example.actorsearchapplication.response.TvPopularResponse;
 
 import retrofit2.Call;
@@ -39,7 +40,7 @@ public interface RestAPI {
     );
 
     @GET("person/{person_id}/combined_credits")
-    Call<FilmographyResponse> getFlimography(
+    Call<FilmographyResponse> getFilmography(
             @Path("person_id") int actor_id,
             @Query("api_key") String api_key
     );
@@ -51,8 +52,20 @@ public interface RestAPI {
     );
 
     @GET("movie/{movie_id}/credits")
-    Call<CastingResponse> getCasting(
+    Call<CastingResponse> getCastingMovie(
             @Path("movie_id" ) int movie_id,
+            @Query("api_key") String api_key
+    );
+
+    @GET("tv/{tv_id}")
+    Call<TvDetailResponse> getTvDetail(
+            @Path("tv_id" ) int tv_id,
+            @Query("api_key") String api_key
+    );
+
+    @GET("tv/{tv_id}/credits")
+    Call<CastingResponse> getCastingTV(
+            @Path("tv_id" ) int tv_id,
             @Query("api_key") String api_key
     );
 }

@@ -75,7 +75,6 @@ public class MovieDetailModel {
             if(i != genres.size()-1) genresToString += genres.get(i).getName()+" · ";
             else genresToString += genres.get(i).getName();
         }
-
         return genresToString;
     }
     public String getInformation() {

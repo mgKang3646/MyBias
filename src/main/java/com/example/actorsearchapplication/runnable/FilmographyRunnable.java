@@ -27,7 +27,7 @@ public class FilmographyRunnable implements Runnable{
     @Override
     public void run() {
         try {
-            Response response = Servicey.getRestApi().getFlimography(id, Credentials.API_KEY).execute();
+            Response response = Servicey.getRestApi().getFilmography(id, Credentials.API_KEY).execute();
 
             if(response.code() == 200){
                 Log.v("Tag","FilmographyRunnable code == 200");

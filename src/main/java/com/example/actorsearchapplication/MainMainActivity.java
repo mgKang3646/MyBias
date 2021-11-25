@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -31,10 +30,9 @@ import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 import com.example.actorsearchapplication.viewutil.TabLayoutHandler;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.textfield.TextInputLayout;
 
 
-public class MainActivity extends AppCompatActivity implements ActivityViewListener {
+public class MainMainActivity extends AppCompatActivity implements MainActivityViewListener {
 
 
     // 뷰 컴포넌트
@@ -103,7 +101,10 @@ public class MainActivity extends AppCompatActivity implements ActivityViewListe
 
     @Override
     public void moveTVDetailPage(int id) {
-
+        Intent intent = new Intent(getApplicationContext(), TvDetailActivity.class);
+        intent.putExtra("tv_id",id);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     @Override

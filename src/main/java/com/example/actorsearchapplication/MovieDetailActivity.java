@@ -18,7 +18,7 @@ import com.example.actorsearchapplication.observer.MovieDetailObserver;
 import com.example.actorsearchapplication.viewmodels.MovieDetailViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements ActivityClickListener {
 
     private ImageButton backButton;
     private LinearLayout layout_parent_movie_detail;
@@ -32,8 +32,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createStatusBar();
         setContentView(R.layout.activity_movie_detail);
+        createStatusBar();
 
         backButton = findViewById(R.id.backButton);
         layout_parent_movie_detail = findViewById(R.id.layout_parent_movie_detail);
@@ -49,7 +49,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieDetailViewModel = new MovieDetailViewModel();
         movieDetailViewAdapter = new MovieDetailViewAdapter(movieDetailView);
-        castingRecyclerAdapter = new CastingRecyclerAdapter();
+        castingRecyclerAdapter = new CastingRecyclerAdapter(this);
 
         recyclerViewCasting.setAdapter(castingRecyclerAdapter);
         recyclerViewCasting.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -62,8 +62,22 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void moveActorDetailPage(int id) {
+        Intent intent = new Intent(getApplicationContext(),ActorDetailActivity.class);
+        intent.putExtra("actor_id",id);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+    @Override
+    public void moveMovieDetailPage(int id) {}
+    @Override
+    public void moveTvDetailPage(int id) {}
+
     private void createStatusBar(){
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
     }
+
+
 }
