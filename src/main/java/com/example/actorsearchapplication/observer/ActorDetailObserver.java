@@ -18,8 +18,8 @@ public class ActorDetailObserver implements Observer<ActorDetailModel>  {
     @Override
     public void onChanged(ActorDetailModel actorDetailModel) {
         if(actorDetailModel != null){
-            actorDetailViewAdapter.setActorDetailModel(actorDetailModel);
-            actorDetailViewAdapter.onBindView();
+            actorDetailViewAdapter.setModel(actorDetailModel);
+            actorDetailViewAdapter.onBind();
         }else{
             Log.v("Tag","ActorDetailObserver : ActorDetailModel == null");
         }

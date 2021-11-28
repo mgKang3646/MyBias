@@ -21,7 +21,7 @@ public class MovieObserver implements Observer<List<MovieModel>> {
             mainRecyclerViewAdapter.setMode(MainRecyclerViewAdapter.MODE_MOVIE);
             mainRecyclerViewAdapter.setMovies(movieModels);
             mainRecyclerViewAdapter.notifyDataSetChanged();
-            mainRecyclerViewAdapter.requestSwitchSelectedMovieToTopMovie();
+            mainRecyclerViewAdapter.requestSwitchSelected();
         }
     }
 }

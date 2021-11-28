@@ -48,13 +48,13 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void onBindViewHolder(@NonNull MainRecyclerViewHolder holder, int position) {
         holder.setMode(mode); // 다른 관심사
         if(mode == MODE_POPULAR_ACTORS){
-            holder.bind(actors.get(position));
+            holder.onBind(actors.get(position));
         }
         else if(mode == MODE_MOVIE) {
-            holder.bind(movies.get(position));
+            holder.onBind(movies.get(position));
         }
         else if(mode == MODE_TV){
-            holder.bind(tvs.get(position));
+            holder.onBind(tvs.get(position));
         }
     }
 
@@ -73,14 +73,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void setTvs(List<TvModel> tvs) { this.tvs = tvs; }
     public void setMode(int mode){ this.mode = mode; }
 
-    public void requestSwitchSelectedActorToTopActor(){
-        mainActivityViewListener.requestSwitchSelectedActor(0);
+    public void requestSwitchSelected(){
+        mainActivityViewListener.requestSwitchSelected(mode,0);
     }
-    public void requestSwitchSelectedMovieToTopMovie(){
-        mainActivityViewListener.requestSwitchSelectedMovie(0);
-    }
-    public void requestSwitchSelectedMovieToTopTv(){
-        mainActivityViewListener.requestSwitchSelectedTv(0);
-    }
-
 }

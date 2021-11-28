@@ -2,14 +2,20 @@ package com.example.actorsearchapplication.viewmodels;
 
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
+import com.example.actorsearchapplication.adapters.MainViewAdapter;
 import com.example.actorsearchapplication.adapters.SelectedViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TrendModel;
 import com.example.actorsearchapplication.models.TvModel;
+import com.example.actorsearchapplication.observer.SelectedActorObserver;
+import com.example.actorsearchapplication.observer.SelectedMovieObserver;
+import com.example.actorsearchapplication.observer.SelectedTvObserver;
 import com.example.actorsearchapplication.utils.MVVMFactory;
 
 public class SelectedViewModel extends ViewModel {
@@ -31,20 +37,31 @@ public class SelectedViewModel extends ViewModel {
     public MutableLiveData<MovieModel> getSelectedMovie(){ return  selectedMovie; }
     public MutableLiveData<TvModel> getSelectedTv() { return selectedTv; }
 
-    public void switchSelectedActor(int position){
+    public void switchSelected(int mode, int position){
+        if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS) switchSelectedActor(position);
+        else if(mode == MainRecyclerViewAdapter.MODE_MOVIE) switchSelectedMovie(position);
+        else if(mode == MainRecyclerViewAdapter.MODE_TV) switchSelectedTv(position);
+    }
+
+    public void observe(LifecycleOwner owner, MainViewAdapter mainViewAdapter){
+        getSelectedActor().observe(owner,new SelectedActorObserver((SelectedViewAdapter)mainViewAdapter));
+        getSelectedMovie().observe(owner,new SelectedMovieObserver((SelectedViewAdapter)mainViewAdapter));
+        getSelectedTv().observe(owner,new SelectedTvObserver((SelectedViewAdapter)mainViewAdapter));
+    }
+
+    private void switchSelectedActor(int position){
         ActorModel actorModel = MVVMFactory.getMainRepository().getSelectedActor(position);
         selectedActor.postValue(actorModel);
     }
 
-    public void switchSelectedMovie(int position){
+    private void switchSelectedMovie(int position){
         MovieModel movie = MVVMFactory.getMainRepository().getSelectedMovie(position);
-        Log.v("Tag", "선택된 영화 이름 : " + movie.getTitle());
         selectedMovie.postValue(movie);
     }
 
-    public void switchSelectedTv(int position){
+    private void switchSelectedTv(int position){
         TvModel tv = MVVMFactory.getMainRepository().getSelectedTv(position);
-        Log.v("Tag", "선택된 Tv 이름 : " + tv.getName());
         selectedTv.postValue(tv);
     }
+
 }

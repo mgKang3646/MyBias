@@ -5,7 +5,7 @@ import android.view.View;
 import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.MovieDetailModel;
 
-public class MovieDetailViewAdapter {
+public class MovieDetailViewAdapter implements MainViewAdapter {
 
     private View movieDetailView;
     private MovieDetailViewHolder movieDetailViewHolder;
@@ -16,11 +16,13 @@ public class MovieDetailViewAdapter {
         this.movieDetailViewHolder = new MovieDetailViewHolder(movieDetailView);
     }
 
-    public void setMovieDetailModel(MovieDetailModel movieDetailModel){
-        this.movieDetailModel = movieDetailModel;
+    @Override
+    public void setModel(Object object){
+        this.movieDetailModel = (MovieDetailModel) object;
     }
 
-    public void onBindView(){
+    @Override
+    public void onBind(){
         movieDetailViewHolder.onBind(movieDetailModel);
     }
 

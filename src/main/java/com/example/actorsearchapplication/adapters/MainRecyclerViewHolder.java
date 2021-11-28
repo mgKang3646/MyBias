@@ -12,69 +12,67 @@ import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
+import com.example.actorsearchapplication.models.RecyclerHolderClickModel;
 import com.example.actorsearchapplication.models.TvModel;
+import com.example.actorsearchapplication.viewutil.GlideUtil;
+import com.example.actorsearchapplication.viewutil.RecyclerViewHolderClickHandler;
 
-public class MainRecyclerViewHolder extends RecyclerView.ViewHolder{
+public class MainRecyclerViewHolder extends RecyclerView.ViewHolder implements RecyclerViewHolder{
 
     private ImageView mainImage, iconImage;
     private TextView popularity;
-    private MainActivityViewListener mainActivityViewListener;
     private int mode;
+    private int position;
 
 
     public MainRecyclerViewHolder(@NonNull View itemView, MainActivityViewListener mainActivityViewListener) {
         super(itemView);
+        setFindViewById();
+        setClickEvent(mainActivityViewListener);
+    }
+
+    private void setFindViewById(){
         mainImage = itemView.findViewById(R.id.iv_holder);
         iconImage = itemView.findViewById(R.id.iv_ic_holder);
         popularity = itemView.findViewById(R.id.tv_popularity_holder);
-        this.mainActivityViewListener = mainActivityViewListener;
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS) mainActivityViewListener.requestSwitchSelectedActor(getAdapterPosition());
-                else if ( mode == MainRecyclerViewAdapter.MODE_MOVIE) mainActivityViewListener.requestSwitchSelectedMovie(getAdapterPosition());
-                else if ( mode == MainRecyclerViewAdapter.MODE_TV ) mainActivityViewListener.requestSwitchSelectedTv(getAdapterPosition());
-            }
-        });
     }
 
-    public void setMode(int mode) {
-        this.mode = mode;
+    private void setClickEvent(MainActivityViewListener mainActivityViewListener){
+        RecyclerViewHolderClickHandler recyclerViewHolderClickHandler = new RecyclerViewHolderClickHandler(this);
+        recyclerViewHolderClickHandler.setMainRecyclerClickEvent(mainActivityViewListener);
     }
 
-    public void bind(ActorModel popularActor){
+    public void setMode(int mode) { this.mode = mode; }
+
+    public void onBind(ActorModel popularActor){
         popularity.setText(Math.round(popularActor.getPopularity()*10)/10.0+"");
         iconImage.setImageResource(R.drawable.ic_heart);
-        if(popularActor.getProfile_path() != null){ // 메소드 분리 하기, 중복코드
-            Glide.with(itemView.getContext())
-                    .load("https://image.tmdb.org/t/p/w300/"+popularActor.getProfile_path()).into(mainImage);
-        }else{
-            mainImage.setImageResource(R.drawable.default_image);
-        }
+        GlideUtil.loadPosterImage(itemView.getContext(),popularActor.getProfile_path(),mainImage);
     }
 
-    public void bind(MovieModel movie){
+    public void onBind(MovieModel movie){
         popularity.setText(movie.getVote_average()+"");
         iconImage.setImageResource(R.drawable.ic_star);
-        if(movie.getPoster_path() != null){
-            Glide.with(itemView.getContext())
-                    .load("https://image.tmdb.org/t/p/w300/"+movie.getPoster_path()).into(mainImage);
-        }else{
-            mainImage.setImageResource(R.drawable.default_image);
-        }
-
+        GlideUtil.loadPosterImage(itemView.getContext(),movie.getPoster_path(),mainImage);
     }
 
-    public void bind(TvModel tv){
+    public void onBind(TvModel tv){
         popularity.setText(tv.getVote_average()+"");
         iconImage.setImageResource(R.drawable.ic_star);
-        if(tv.getPoster_path() != null){
-            Glide.with(itemView.getContext())
-                    .load("https://image.tmdb.org/t/p/w300/"+tv.getPoster_path()).into(mainImage);
-        }else{
-            mainImage.setImageResource(R.drawable.default_image);
-        }
+        GlideUtil.loadPosterImage(itemView.getContext(),tv.getPoster_path(),mainImage);
+    }
+
+    @Override
+    public View getView() {
+        return itemView;
+    }
+
+    @Override
+    public RecyclerHolderClickModel getRecyclerHolderClickModel() {
+        RecyclerHolderClickModel recyclerHolderClickModel = new RecyclerHolderClickModel();
+        recyclerHolderClickModel.setId(getAdapterPosition());
+        recyclerHolderClickModel.setMode(mode);
+        return recyclerHolderClickModel;
     }
 }
 

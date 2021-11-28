@@ -16,9 +16,8 @@ public class SelectedTvObserver implements Observer<TvModel> {
     @Override
     public void onChanged(TvModel tvModel) {
         if(tvModel != null){
-            selectedViewAdapter.setMode(SelectedViewAdapter.MODE_SELECTED_TV);
-            selectedViewAdapter.setSelectedTv(tvModel);
-            selectedViewAdapter.onBindView();
+            selectedViewAdapter.setModel(tvModel);
+            selectedViewAdapter.onBind();
         }
     }
 }

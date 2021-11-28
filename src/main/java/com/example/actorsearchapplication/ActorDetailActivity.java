@@ -42,7 +42,7 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
         buttonClickHandler.setOnClickEvent(backButton);
 
         Intent intent = getIntent();
-        id = intent.getIntExtra("actor_id",-1); // 예외처리 해야됨
+        id = intent.getIntExtra("id",-1); // 예외처리 해야됨
 
         actorDetailView = View.inflate(getApplicationContext(),R.layout.layout_actor_detail,layout_parent_actor_detail);
 
@@ -67,7 +67,7 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
     @Override
     public void moveMovieDetailPage(int id) {
         Intent intent = new Intent(getApplicationContext(),MovieDetailActivity.class);
-        intent.putExtra("movie_id",id);
+        intent.putExtra("id",id);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
@@ -75,7 +75,7 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
     @Override
     public void moveTvDetailPage(int id) {
         Intent intent = new Intent(getApplicationContext(),TvDetailActivity.class);
-        intent.putExtra("tv_id",id);
+        intent.putExtra("id",id);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }

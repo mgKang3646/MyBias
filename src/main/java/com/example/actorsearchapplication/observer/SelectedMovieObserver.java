@@ -16,9 +16,8 @@ public class SelectedMovieObserver implements Observer<MovieModel> {
     @Override
     public void onChanged(MovieModel movieModel) {
         if(movieModel != null){
-            selectedViewAdapter.setMode(SelectedViewAdapter.MODE_SELECTED_MOVIE);
-            selectedViewAdapter.setSelectedMovie(movieModel);
-            selectedViewAdapter.onBindView();
+            selectedViewAdapter.setModel(movieModel);
+            selectedViewAdapter.onBind();
         }
     }
 }

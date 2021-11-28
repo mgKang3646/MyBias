@@ -5,11 +5,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.actorsearchapplication.ActorDetailActivity;
 import com.example.actorsearchapplication.MainActivityViewListener;
+import com.example.actorsearchapplication.MovieDetailActivity;
 import com.example.actorsearchapplication.R;
+import com.example.actorsearchapplication.TvDetailActivity;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.MovieModel;
 import com.example.actorsearchapplication.models.TvModel;
+import com.example.actorsearchapplication.viewutil.GlideUtil;
 
 public class SelectedViewHolder {
 
@@ -17,32 +21,40 @@ public class SelectedViewHolder {
     TextView selectedName;
     TextView selectedPopularity;
     MainActivityViewListener mainActivityViewListener;
-    View selectedView;
+    View view;
 
     private int id;
     private int mode;
 
-    public SelectedViewHolder(View selectedView, MainActivityViewListener mainActivityViewListener) {
-        selectedImageView = selectedView.findViewById(R.id.iv_selected);
-        selectedName = selectedView.findViewById(R.id.tv_name_selected);
-        selectedPopularity = selectedView.findViewById(R.id.tv_popularity_selected);
-        selectedIconImageView = selectedView.findViewById(R.id.iv_ic_selected);
+    public SelectedViewHolder(View view, MainActivityViewListener mainActivityViewListener) {
+        setView(view);
+        setFindViewById();
+        setClickEvent(mainActivityViewListener);
+    }
 
-        this.mainActivityViewListener = mainActivityViewListener;
-        this.selectedView = selectedView;
+    private void setView(View view){
+        this.view = view;
+    }
 
-        //Actor냐 트렌드냐에 따라 구분되어야 함
-        selectedView.setOnClickListener(new View.OnClickListener() {
+    private void setFindViewById(){
+        selectedImageView = view.findViewById(R.id.iv_selected);
+        selectedName = view.findViewById(R.id.tv_name_selected);
+        selectedPopularity = view.findViewById(R.id.tv_popularity_selected);
+        selectedIconImageView = view.findViewById(R.id.iv_ic_selected);
+    }
+
+    private void setClickEvent(MainActivityViewListener mainActivityViewListener){
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS){
-                    mainActivityViewListener.moveActorDetailPage(id);
+                    mainActivityViewListener.moveDetailPage(ActorDetailActivity.class,id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_MOVIE){
-                    mainActivityViewListener.moveMovieDetailPage(id);
+                    mainActivityViewListener.moveDetailPage(MovieDetailActivity.class,id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_TV){
-                    mainActivityViewListener.moveTVDetailPage(id);
+                    mainActivityViewListener.moveDetailPage(TvDetailActivity.class,id);
                 }
             }
         });
@@ -54,13 +66,7 @@ public class SelectedViewHolder {
         selectedName.setText(actorModel.getName());
         selectedPopularity.setText((Math.round(actorModel.getPopularity()*10))/10.0+"");
         selectedIconImageView.setImageResource(R.drawable.ic_heart);
-        if(actorModel.getProfile_path() != null){ //Gilde 분리하기
-            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorModel.getProfile_path())
-                    .into(selectedImageView);
-        }else{
-            selectedImageView.setImageResource(R.drawable.default_image);
-        }
-
+        GlideUtil.loadProfileImage(view.getContext(),actorModel.getProfile_path(),selectedImageView);
     }
 
     public void onBind(MovieModel movieModel){
@@ -69,13 +75,7 @@ public class SelectedViewHolder {
         selectedName.setText(movieModel.getTitle());
         selectedPopularity.setText(movieModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
-        if(movieModel.getPoster_path() != null){
-            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+movieModel.getPoster_path())
-                    .into(selectedImageView);
-        }else{
-            selectedImageView.setImageResource(R.drawable.default_image);
-        }
-
+        GlideUtil.loadProfileImage(view.getContext(),movieModel.getPoster_path(),selectedImageView);
     }
 
     public void onBind(TvModel tvModel){
@@ -84,12 +84,9 @@ public class SelectedViewHolder {
         selectedName.setText(tvModel.getName());
         selectedPopularity.setText(tvModel.getVote_average()+"");
         selectedIconImageView.setImageResource(R.drawable.ic_star);
-        if(tvModel.getPoster_path() != null){
-            Glide.with(selectedView.getContext()).load("https://image.tmdb.org/t/p/w500/"+tvModel.getPoster_path())
-                    .into(selectedImageView);
-        }else{
-            selectedImageView.setImageResource(R.drawable.default_image);
-        }
+        GlideUtil.loadProfileImage(view.getContext(),tvModel.getPoster_path(),selectedImageView);
     }
+
+
 
 }

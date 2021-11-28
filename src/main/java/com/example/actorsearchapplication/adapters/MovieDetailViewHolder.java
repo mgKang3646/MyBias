@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.MovieDetailModel;
 import com.example.actorsearchapplication.models.ProductionModel;
+import com.example.actorsearchapplication.viewutil.GlideUtil;
 
 import java.util.List;
 
@@ -19,23 +20,33 @@ public class MovieDetailViewHolder {
 
     private ImageView iv_movie_detail;
     private TextView tv_popularity_movie, tv_title_movie, tv_release_date, tv_genres, tv_add_information, tv_information;
-    private View movieDetailView;
+    private View view;
     private RecyclerView productionRecyclerView;
 
     private boolean isAddClicked = false;
     private String information;
 
-    public MovieDetailViewHolder(View movieDetailView){
-        this.movieDetailView = movieDetailView;
-        this.iv_movie_detail = movieDetailView.findViewById(R.id.iv_movie_detail);
-        this.tv_popularity_movie = movieDetailView.findViewById(R.id.tv_popularity_movie);
-        this.tv_title_movie = movieDetailView.findViewById(R.id.tv_title_movie);
-        this.tv_release_date = movieDetailView.findViewById(R.id.tv_release_date);
-        this.tv_genres = movieDetailView.findViewById(R.id.tv_genres);
-        this.tv_add_information = movieDetailView.findViewById(R.id.tv_add_information);
-        this.tv_information = movieDetailView.findViewById(R.id.tv_information);
-        this.productionRecyclerView = movieDetailView.findViewById(R.id.recyclerView_production);
+    public MovieDetailViewHolder(View view){
+        setView(view);
+        setFindViewById();
+        setClickEvent();
+    }
 
+
+    private void setView(View view){ this.view = view; }
+
+    private void setFindViewById(){
+        this.iv_movie_detail = view.findViewById(R.id.iv_movie_detail);
+        this.tv_popularity_movie = view.findViewById(R.id.tv_popularity_movie);
+        this.tv_title_movie = view.findViewById(R.id.tv_title_movie);
+        this.tv_release_date = view.findViewById(R.id.tv_release_date);
+        this.tv_genres = view.findViewById(R.id.tv_genres);
+        this.tv_add_information = view.findViewById(R.id.tv_add_information);
+        this.tv_information = view.findViewById(R.id.tv_information);
+        this.productionRecyclerView = view.findViewById(R.id.recyclerView_production);
+    }
+
+    private void setClickEvent(){
         this.tv_add_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,22 +70,18 @@ public class MovieDetailViewHolder {
         tv_genres.setText(movieDetailModel.getGenresToString());
         tv_title_movie.setText(movieDetailModel.getTitle());
         tv_popularity_movie.setText(movieDetailModel.getVote_average()+"");
-        Glide.with(movieDetailView.getContext()).load("https://image.tmdb.org/t/p/w500/"+movieDetailModel.getPoster_path())
-                .into(iv_movie_detail);
+        GlideUtil.loadPosterImage(view.getContext(),movieDetailModel.getPoster_path(),iv_movie_detail);
         setProductionRecyclerView(movieDetailModel.getProduction_companies());
     }
+
 
     private void setProductionRecyclerView(List<ProductionModel> productions){
         if(productions != null) {
             ProductionRecyclerAdapter productionRecyclerAdapter = new ProductionRecyclerAdapter();
             productionRecyclerView.setAdapter(productionRecyclerAdapter);
-            productionRecyclerView.setLayoutManager(new LinearLayoutManager(movieDetailView.getContext(),LinearLayoutManager.HORIZONTAL,false));
+            productionRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
             productionRecyclerAdapter.setProductions(productions);
             productionRecyclerAdapter.notifyDataSetChanged();
         }
     }
-
-
-
-
 }

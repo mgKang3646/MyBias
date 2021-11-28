@@ -21,7 +21,7 @@ public class ActorPopularObserver implements Observer<List<ActorModel>> {
             mainRecyclerViewAdapter.setMode(MainRecyclerViewAdapter.MODE_POPULAR_ACTORS);
             mainRecyclerViewAdapter.setActors(actorModels);
             mainRecyclerViewAdapter.notifyDataSetChanged();
-            mainRecyclerViewAdapter.requestSwitchSelectedActorToTopActor();
+            mainRecyclerViewAdapter.requestSwitchSelected();
         }
     }
 }

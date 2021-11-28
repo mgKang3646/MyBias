@@ -18,8 +18,8 @@ public class TvDetailObserver implements Observer<TvDetailModel> {
     @Override
     public void onChanged(TvDetailModel tvDetailModel) {
         if(tvDetailModel != null){
-            tvDetailViewAdapter.setTvDetail(tvDetailModel);
-            tvDetailViewAdapter.onBindView();
+            tvDetailViewAdapter.setModel(tvDetailModel);
+            tvDetailViewAdapter.onBind();
         }else{
             Log.v("Tag","TvDetailObserver : TvDetailModel is NULL");
         }

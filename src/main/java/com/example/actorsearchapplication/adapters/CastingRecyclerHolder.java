@@ -12,35 +12,51 @@ import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.ActivityClickListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.models.RecyclerHolderClickModel;
+import com.example.actorsearchapplication.viewutil.GlideUtil;
+import com.example.actorsearchapplication.viewutil.RecyclerViewHolderClickHandler;
 
-public class CastingRecyclerHolder extends RecyclerView.ViewHolder {
+public class CastingRecyclerHolder extends RecyclerView.ViewHolder implements RecyclerViewHolder{
 
     private TextView tv_popularity_holder;
     private ImageView iv_holder;
-    private View view;
+    private RecyclerViewHolderClickHandler recyclerViewHolderClickHandler;
+    private RecyclerHolderClickModel recyclerHolderClickModel;
     private int id;
 
     public CastingRecyclerHolder(@NonNull View itemView, ActivityClickListener activityClickListener) {
         super(itemView);
-        this.view = itemView;
+        setFindViewById();
+        setClickEvent(activityClickListener);
+    }
+
+    private void setFindViewById(){
         tv_popularity_holder = itemView.findViewById(R.id.tv_popularity_holder);
         iv_holder = itemView.findViewById(R.id.iv_holder);
+    }
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activityClickListener.moveActorDetailPage(id);
-            }
-        });
+    private void setClickEvent(ActivityClickListener activityClickListener){
+        recyclerViewHolderClickHandler = new RecyclerViewHolderClickHandler(this);
+        recyclerViewHolderClickHandler.setCastingRecyclerClickEvent(activityClickListener);
     }
 
     public void onBind(ActorModel actorModel){
         id = actorModel.getId();
         tv_popularity_holder.setText(Math.round(actorModel.getPopularity()*10)/10.0+"");
-        if(actorModel.getProfile_path() != null){
-            Glide.with(view.getContext()).load("https://image.tmdb.org/t/p/w500/"+actorModel.getProfile_path()).into(iv_holder);
-        }else{
-            iv_holder.setImageResource(R.drawable.default_image);
-        }
+        GlideUtil.loadProfileImage(itemView.getContext(),actorModel.getProfile_path(),iv_holder);
     }
+
+    @Override
+    public View getView(){
+        return itemView;
+    }
+
+    @Override
+    public RecyclerHolderClickModel getRecyclerHolderClickModel(){
+        RecyclerHolderClickModel recyclerHolderClickModel = new RecyclerHolderClickModel();
+        recyclerHolderClickModel.setId(id);
+        return recyclerHolderClickModel;
+    }
+
+
 }

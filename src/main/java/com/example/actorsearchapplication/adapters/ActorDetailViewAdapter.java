@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.models.ActorDetailModel;
 
-public class ActorDetailViewAdapter {
+public class ActorDetailViewAdapter implements MainViewAdapter {
 
     private View actorDetailView;
     private ActorDetailViewHolder actorDetailViewHolder;
@@ -17,13 +17,12 @@ public class ActorDetailViewAdapter {
         this.actorDetailViewHolder = new ActorDetailViewHolder(actorDetailView);
     }
 
-    public void setActorDetailModel(ActorDetailModel actorDetailModel){
-        this.actorDetailModel = actorDetailModel;
+    @Override
+    public void setModel(Object object){
+        this.actorDetailModel = (ActorDetailModel)object;
     }
-
-    public void onBindView(){
-        actorDetailViewHolder.onBind(actorDetailModel);
-    }
+    @Override
+    public void onBind(){ actorDetailViewHolder.onBind(actorDetailModel);}
 
 
 }

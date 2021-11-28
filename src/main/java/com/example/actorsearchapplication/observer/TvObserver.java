@@ -20,7 +20,7 @@ public class TvObserver implements Observer<List<TvModel>> {
             mainRecyclerViewAdapter.setMode(MainRecyclerViewAdapter.MODE_TV);
             mainRecyclerViewAdapter.setTvs(tvModels);
             mainRecyclerViewAdapter.notifyDataSetChanged();
-            mainRecyclerViewAdapter.requestSwitchSelectedMovieToTopTv();
+            mainRecyclerViewAdapter.requestSwitchSelected();
         }
     }
 }

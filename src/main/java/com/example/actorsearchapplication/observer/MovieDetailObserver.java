@@ -18,8 +18,8 @@ public class MovieDetailObserver implements Observer<MovieDetailModel> {
     @Override
     public void onChanged(MovieDetailModel movieDetailModel) {
         if(movieDetailModel != null){
-            movieDetailViewAdapter.setMovieDetailModel(movieDetailModel);
-            movieDetailViewAdapter.onBindView();
+            movieDetailViewAdapter.setModel(movieDetailModel);
+            movieDetailViewAdapter.onBind();
         }else{
             Log.v("Tag","MovieDetailObserver : movieDetailModel == null");
         }

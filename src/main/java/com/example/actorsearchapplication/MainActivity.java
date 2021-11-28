@@ -1,5 +1,6 @@
 package com.example.actorsearchapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
+import com.example.actorsearchapplication.adapters.MainViewAdapter;
 import com.example.actorsearchapplication.adapters.SelectedViewAdapter;
 import com.example.actorsearchapplication.models.UrlModel;
 import com.example.actorsearchapplication.observer.ActorPopularObserver;
@@ -27,12 +29,16 @@ import com.example.actorsearchapplication.observer.TvObserver;
 import com.example.actorsearchapplication.viewmodels.ListViewModel;
 import com.example.actorsearchapplication.viewmodels.SelectedViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
+import com.example.actorsearchapplication.viewutil.IntentUtil;
+import com.example.actorsearchapplication.viewutil.MainViewUtil;
+import com.example.actorsearchapplication.viewutil.RecyclerViewUtil;
+import com.example.actorsearchapplication.viewutil.StatusBar;
 import com.example.actorsearchapplication.viewutil.TabLayoutHandler;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class MainMainActivity extends AppCompatActivity implements MainActivityViewListener {
+public class MainActivity extends AppCompatActivity implements MainActivityViewListener {
 
 
     // 뷰 컴포넌트
@@ -43,24 +49,28 @@ public class MainMainActivity extends AppCompatActivity implements MainActivityV
     RecyclerView recyclerView;
     View selectedView;
     LinearLayout layout_parent_selected;
+
     //어댑터
-    MainRecyclerViewAdapter mainRecyclerViewAdapter;
-    SelectedViewAdapter selectedViewAdapter;
-    ArrayAdapter<String> stringArrayAdapter;
+    MainViewUtil mainViewUtil;
+    RecyclerViewUtil recyclerViewUtil;
     // 뷰모델
     ListViewModel listViewModel;
     SelectedViewModel selectedViewModel;
-
-    String[] items = {"영화", "시리즈"};
+    IntentUtil intentUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createStatusBar();
         setContentView(R.layout.activity_main);
-        onSettingView();
-        onSettingViewModel();
+        StatusBar.setStatusBar(this);
+        setIntentUtil();
+        UrlModel.setPage("1");
+        onBindViewComponents();
         setViewEvent();
+        setMainView();
+        setRecyclerView();
+        setListViewModel();
+        requestPopularActor();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -72,74 +82,25 @@ public class MainMainActivity extends AppCompatActivity implements MainActivityV
         }
     }
     @Override
-    public void requestSwitchSelectedActor(int position) {
-        selectedViewModel.switchSelectedActor(position);
-    }
+    public void requestSwitchSelected(int mode, int position) { selectedViewModel.switchSelected(mode,position); }
     @Override
-    public void requestSwitchSelectedMovie(int position){
-        selectedViewModel.switchSelectedMovie(position);
-    }
-    @Override
-    public void requestSwitchSelectedTv(int position) {
-        selectedViewModel.switchSelectedTv(position);
-    }
-    @Override
-    public void moveActorDetailPage(int id) {
-        Intent intent = new Intent(getApplicationContext(), ActorDetailActivity.class);
-        intent.putExtra("actor_id",id);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
-
-    @Override
-    public void moveMovieDetailPage(int id) {
-        Intent intent = new Intent(getApplicationContext(), MovieDetailActivity.class);
-        intent.putExtra("movie_id",id);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
-
-    @Override
-    public void moveTVDetailPage(int id) {
-        Intent intent = new Intent(getApplicationContext(), TvDetailActivity.class);
-        intent.putExtra("tv_id",id);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
-
+    public void moveDetailPage(Class className, int id) { intentUtil.moveToDetailActivity(className,id); }
     @Override
     public ListViewModel getListViewModel(){
         return listViewModel;
     }
-
     @Override
     public Button getCategoryButton(){
         return category_button;
     }
-
-    private void onSettingView(){
-        onBindViewComponents();
-        createAdapter();
-        onBindViewAndAdapter();
-    }
-
-    private void onSettingViewModel(){
-        createViewModel();
-        doObserve();
-        requestDefaultProcessToViewModel();
-    }
-
-    private void createStatusBar(){
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 
     private void onBindViewComponents(){
-
         layout_parent_selected = findViewById(R.id.layout_parent_selected);
         recyclerView = findViewById(R.id.recyclerView);
-        selectedView = View.inflate(getApplicationContext(),R.layout.layout_recycler_selected,layout_parent_selected);
-
         tab = findViewById(R.id.tab);
         tabItem_myActor = findViewById(R.id.tabItem_myActor);
         tabItem_popularActor = findViewById(R.id.tabItem_popularActor);
@@ -149,33 +110,25 @@ public class MainMainActivity extends AppCompatActivity implements MainActivityV
         category_button.setVisibility(View.INVISIBLE);
     }
 
-    private void createAdapter(){
-        mainRecyclerViewAdapter = new MainRecyclerViewAdapter(this);
-        selectedViewAdapter = new SelectedViewAdapter(this,selectedView);
+    private void setMainView(){
+        mainViewUtil = new MainViewUtil();
+        mainViewUtil.inflate(getApplicationContext(),R.layout.layout_recycler_selected,layout_parent_selected);
+        mainViewUtil.createSelectedViewAdapter(this);
     }
 
-    private void onBindViewAndAdapter(){
-        stringArrayAdapter = new ArrayAdapter<>(this,R.layout.trend_list,items);
-        recyclerView.setAdapter(mainRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        selectedViewAdapter.setSelectedView(selectedView);
+    private void setRecyclerView(){
+        recyclerViewUtil = new RecyclerViewUtil(recyclerView,new MainRecyclerViewAdapter(this));
+        recyclerViewUtil.setLayoutManagerHorizontal(getApplicationContext());
     }
 
-    private void createViewModel(){
+    private void setListViewModel(){
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
         selectedViewModel = new ViewModelProvider(this).get(SelectedViewModel.class);
+        listViewModel.observe(this,recyclerViewUtil.getRecyclerViewAdapter());
+        selectedViewModel.observe(this, mainViewUtil.getMainViewAdapter());
     }
 
-    private void doObserve(){
-        listViewModel.getPopularActors().observe(this,new ActorPopularObserver(mainRecyclerViewAdapter));
-        listViewModel.getMovies().observe(this,new MovieObserver(mainRecyclerViewAdapter));
-        listViewModel.getTvs().observe(this,new TvObserver(mainRecyclerViewAdapter));
-        selectedViewModel.getSelectedActor().observe(this,new SelectedActorObserver(selectedViewAdapter));
-        selectedViewModel.getSelectedMovie().observe(this,new SelectedMovieObserver(selectedViewAdapter));
-        selectedViewModel.getSelectedTv().observe(this,new SelectedTvObserver(selectedViewAdapter));
-    }
-    private void requestDefaultProcessToViewModel(){
-        UrlModel.setPage("1"); // 분리시켜야함
+    private void requestPopularActor(){
         listViewModel.requestPopularActors();
     }
 
@@ -186,6 +139,7 @@ public class MainMainActivity extends AppCompatActivity implements MainActivityV
         buttonClickHandler.setOnClickEvent(category_button);
     }
 
-
-
+    private void setIntentUtil(){
+        intentUtil = new IntentUtil(this);
+    }
 }

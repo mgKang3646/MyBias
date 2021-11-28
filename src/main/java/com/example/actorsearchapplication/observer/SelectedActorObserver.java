@@ -18,9 +18,8 @@ public class SelectedActorObserver implements Observer<ActorModel> {
     @Override
     public void onChanged(ActorModel actorModel) {
         if(actorModel != null){
-            selectedViewAdapter.setMode(SelectedViewAdapter.MODE_SELECTED_ACTOR);
-            selectedViewAdapter.setSelectedActor(actorModel);
-            selectedViewAdapter.onBindView();
+            selectedViewAdapter.setModel(actorModel);
+            selectedViewAdapter.onBind();
         }
     }
 }

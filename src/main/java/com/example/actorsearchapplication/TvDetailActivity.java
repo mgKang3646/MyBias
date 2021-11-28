@@ -44,7 +44,7 @@ public class TvDetailActivity extends AppCompatActivity implements ActivityClick
         buttonClickHandler.setOnClickEvent(backButton);
 
         Intent intent = getIntent();
-        id = intent.getIntExtra("tv_id",-1); // 예외처리 해야됨
+        id = intent.getIntExtra("id",-1); // 예외처리 해야됨
 
         tvDetailView = View.inflate(getApplicationContext(),R.layout.layout_tv_detail,layout_parent_tv_detail);
 
@@ -71,7 +71,7 @@ public class TvDetailActivity extends AppCompatActivity implements ActivityClick
     @Override
     public void moveActorDetailPage(int id) {
         Intent intent = new Intent(getApplicationContext(),ActorDetailActivity.class);
-        intent.putExtra("actor_id",id);
+        intent.putExtra("id",id);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
