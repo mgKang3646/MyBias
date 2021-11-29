@@ -1,6 +1,7 @@
 package com.example.actorsearchapplication.observer;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
@@ -11,8 +12,8 @@ public class ActorPopularObserver implements Observer<List<ActorModel>> {
 
     MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
-    public ActorPopularObserver(MainRecyclerViewAdapter mainRecyclerViewAdapter){
-        this.mainRecyclerViewAdapter = mainRecyclerViewAdapter;
+    public ActorPopularObserver(RecyclerView.Adapter recyclerViewAdapter){
+        this.mainRecyclerViewAdapter = (MainRecyclerViewAdapter)recyclerViewAdapter;
     }
 
     @Override

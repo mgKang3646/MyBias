@@ -44,9 +44,9 @@ public class SelectedViewModel extends ViewModel {
     }
 
     public void observe(LifecycleOwner owner, MainViewAdapter mainViewAdapter){
-        getSelectedActor().observe(owner,new SelectedActorObserver((SelectedViewAdapter)mainViewAdapter));
-        getSelectedMovie().observe(owner,new SelectedMovieObserver((SelectedViewAdapter)mainViewAdapter));
-        getSelectedTv().observe(owner,new SelectedTvObserver((SelectedViewAdapter)mainViewAdapter));
+        getSelectedActor().observe(owner,new SelectedActorObserver(mainViewAdapter));
+        getSelectedMovie().observe(owner,new SelectedMovieObserver(mainViewAdapter));
+        getSelectedTv().observe(owner,new SelectedTvObserver(mainViewAdapter));
     }
 
     private void switchSelectedActor(int position){

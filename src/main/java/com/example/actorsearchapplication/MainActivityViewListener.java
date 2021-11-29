@@ -10,6 +10,5 @@ public interface MainActivityViewListener {
     void moveDetailPage(Class className, int id);
     ListViewModel getListViewModel();
     Button getCategoryButton();
-    Context getContext();
 
 }

@@ -1,6 +1,7 @@
 package com.example.actorsearchapplication.observer;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.TvModel;
@@ -10,8 +11,8 @@ import java.util.List;
 public class TvObserver implements Observer<List<TvModel>> {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
-    public TvObserver(MainRecyclerViewAdapter mainRecyclerViewAdapter){
-        this.mainRecyclerViewAdapter = mainRecyclerViewAdapter;
+    public TvObserver(RecyclerView.Adapter recyclerAdapter){
+        this.mainRecyclerViewAdapter = (MainRecyclerViewAdapter)recyclerAdapter;
     }
 
     @Override

@@ -39,38 +39,34 @@ import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity implements MainActivityViewListener {
-
-
     // 뷰 컴포넌트
     TabLayout tab;
     TabItem tabItem_popularActor, tabItem_trend, tabItem_myActor;
     ImageButton search_button;
     Button category_button;
     RecyclerView recyclerView;
-    View selectedView;
     LinearLayout layout_parent_selected;
-
-    //어댑터
+    //Util
     MainViewUtil mainViewUtil;
     RecyclerViewUtil recyclerViewUtil;
+    IntentUtil intentUtil;
     // 뷰모델
     ListViewModel listViewModel;
     SelectedViewModel selectedViewModel;
-    IntentUtil intentUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         StatusBar.setStatusBar(this);
-        setIntentUtil();
         UrlModel.setPage("1");
+
         onBindViewComponents();
+        setIntentUtil();
         setViewEvent();
         setMainView();
         setRecyclerView();
-        setListViewModel();
-        requestPopularActor();
+        setViewModel();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -93,10 +89,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
     public Button getCategoryButton(){
         return category_button;
     }
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
-    }
 
     private void onBindViewComponents(){
         layout_parent_selected = findViewById(R.id.layout_parent_selected);
@@ -110,6 +102,17 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
         category_button.setVisibility(View.INVISIBLE);
     }
 
+    private void setIntentUtil(){
+        intentUtil = new IntentUtil(this);
+    }
+
+    private void setViewEvent(){
+        tab.addOnTabSelectedListener(new TabLayoutHandler(this));
+        ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
+        buttonClickHandler.setOnClickEvent(search_button);
+        buttonClickHandler.setOnClickEvent(category_button);
+    }
+
     private void setMainView(){
         mainViewUtil = new MainViewUtil();
         mainViewUtil.inflate(getApplicationContext(),R.layout.layout_recycler_selected,layout_parent_selected);
@@ -121,25 +124,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
         recyclerViewUtil.setLayoutManagerHorizontal(getApplicationContext());
     }
 
-    private void setListViewModel(){
-        listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
+    private void setViewModel(){
         selectedViewModel = new ViewModelProvider(this).get(SelectedViewModel.class);
-        listViewModel.observe(this,recyclerViewUtil.getRecyclerViewAdapter());
         selectedViewModel.observe(this, mainViewUtil.getMainViewAdapter());
-    }
-
-    private void requestPopularActor(){
+        listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
+        listViewModel.observe(this,recyclerViewUtil.getRecyclerViewAdapter());
         listViewModel.requestPopularActors();
     }
 
-    private void setViewEvent(){
-        tab.addOnTabSelectedListener(new TabLayoutHandler(this));
-        ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
-        buttonClickHandler.setOnClickEvent(search_button);
-        buttonClickHandler.setOnClickEvent(category_button);
-    }
 
-    private void setIntentUtil(){
-        intentUtil = new IntentUtil(this);
-    }
 }

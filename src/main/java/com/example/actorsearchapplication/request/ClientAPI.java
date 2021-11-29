@@ -17,6 +17,7 @@ import com.example.actorsearchapplication.runnable.CastingTvRunnable;
 import com.example.actorsearchapplication.runnable.FilmographyRunnable;
 import com.example.actorsearchapplication.runnable.MovieDetailRunnable;
 import com.example.actorsearchapplication.runnable.MovieRunnable;
+import com.example.actorsearchapplication.runnable.SearchRunnable;
 import com.example.actorsearchapplication.runnable.TvDetailRunnable;
 import com.example.actorsearchapplication.runnable.TvRunnable;
 import com.example.actorsearchapplication.utils.MVVMFactory;
@@ -83,6 +84,12 @@ public class ClientAPI {
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
+    public void requestSearchActor(String name){
+        SearchRunnable searchRunnable = new SearchRunnable(this,name);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(searchRunnable);
+        MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
     public MutableLiveData<List<ActorModel>> getPopularActors() {
         return MVVMFactory.getMainRepository().getPopularActors();
     }
@@ -106,5 +113,8 @@ public class ClientAPI {
     }
     public MutableLiveData<TvDetailModel> getTvDetail(){
         return MVVMFactory.getMainRepository().getTvDetail();
+    }
+    public MutableLiveData<List<ActorModel>> getSearchedActors(){
+        return MVVMFactory.getMainRepository().getSearchedActors();
     }
 }

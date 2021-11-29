@@ -4,22 +4,23 @@ import android.util.Log;
 
 import androidx.lifecycle.Observer;
 
+import com.example.actorsearchapplication.adapters.MainViewAdapter;
 import com.example.actorsearchapplication.adapters.TvDetailViewAdapter;
 import com.example.actorsearchapplication.models.TvDetailModel;
 
 public class TvDetailObserver implements Observer<TvDetailModel> {
 
-    private TvDetailViewAdapter tvDetailViewAdapter;
+    private MainViewAdapter mainViewAdapter;
 
-    public TvDetailObserver(TvDetailViewAdapter tvDetailViewAdapter){
-        this.tvDetailViewAdapter = tvDetailViewAdapter;
+    public TvDetailObserver(MainViewAdapter mainViewAdapter){
+        this.mainViewAdapter = mainViewAdapter;
     }
 
     @Override
     public void onChanged(TvDetailModel tvDetailModel) {
         if(tvDetailModel != null){
-            tvDetailViewAdapter.setModel(tvDetailModel);
-            tvDetailViewAdapter.onBind();
+            mainViewAdapter.setModel(tvDetailModel);
+            mainViewAdapter.onBind();
         }else{
             Log.v("Tag","TvDetailObserver : TvDetailModel is NULL");
         }

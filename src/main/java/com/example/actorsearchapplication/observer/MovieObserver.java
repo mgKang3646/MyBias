@@ -1,6 +1,7 @@
 package com.example.actorsearchapplication.observer;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.MovieModel;
@@ -11,8 +12,8 @@ public class MovieObserver implements Observer<List<MovieModel>> {
 
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
-    public MovieObserver(MainRecyclerViewAdapter mainRecyclerViewAdapter){
-        this.mainRecyclerViewAdapter = mainRecyclerViewAdapter;
+    public MovieObserver(RecyclerView.Adapter recyclerViewAdapter){
+        this.mainRecyclerViewAdapter = (MainRecyclerViewAdapter)recyclerViewAdapter;
     }
 
     @Override

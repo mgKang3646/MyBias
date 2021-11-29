@@ -27,6 +27,7 @@ public class MainRepository {
     private MutableLiveData<TvDetailModel> tvDetail;
     private MutableLiveData<List<FilmographyModel>> filmography;
     private MutableLiveData<List<ActorModel>> casting;
+    private MutableLiveData<List<ActorModel>> searchedActors;
 
 
     public MainRepository(){
@@ -38,6 +39,7 @@ public class MainRepository {
         this.movieDetail = new MutableLiveData<>();
         this.casting = new MutableLiveData<>();
         this.tvDetail = new MutableLiveData<>();
+        this.searchedActors = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<ActorModel>> getPopularActors(){
@@ -50,6 +52,7 @@ public class MainRepository {
     public MutableLiveData<MovieDetailModel> getMovieDetail(){ return movieDetail;}
     public MutableLiveData<List<ActorModel>> getCasting(){ return casting; }
     public MutableLiveData<TvDetailModel> getTvDetail() { return tvDetail; }
+    public MutableLiveData<List<ActorModel>> getSearchedActors(){ return searchedActors; }
 
     public void requestPopularActors(){ MVVMFactory.getClientAPI().requestPopularActors();}
     public void requestMovies(){ MVVMFactory.getClientAPI().requestMovies(); }
@@ -60,6 +63,7 @@ public class MainRepository {
     public void requestCasting(int id ) { MVVMFactory.getClientAPI().requestCasting(id); }
     public void requestTvDetail(int id) { MVVMFactory.getClientAPI().requestTvDetail(id);}
     public void requestCastingTv(int id) { MVVMFactory.getClientAPI().requestCastingTv(id);}
+    public void requestSearchActor(String name) { MVVMFactory.getClientAPI().requestSearchActor(name);}
 
     public ActorModel getSelectedActor(int position){ return popularActors.getValue().get(position); }
     public MovieModel getSelectedMovie(int position){ return movies.getValue().get(position);}

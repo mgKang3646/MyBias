@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +15,11 @@ import com.example.actorsearchapplication.SearchActivity;
 public class ButtonClickHandler {
 
     private AppCompatActivity activity;
+    private IntentUtil intentUtil;
 
     public ButtonClickHandler(AppCompatActivity activity){
         this.activity = activity;
+        this.intentUtil = new IntentUtil(activity);
     }
 
     public void setOnClickEvent(ImageButton button){
@@ -25,6 +28,7 @@ public class ButtonClickHandler {
     public void setOnClickEvent(Button button){
         setOnClick(button);
     }
+    public void setOnClickEvent(TextView textView) { setOnClick(textView);}
 
     private void setOnClick(ImageButton button){
         button.setOnClickListener(new View.OnClickListener() {
@@ -34,12 +38,19 @@ public class ButtonClickHandler {
             }
         });
     }
-
     private void setOnClick(Button button){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setEachButtonClickEvent(button);
+            }
+        });
+    }
+    private void setOnClick(TextView textView){
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setEachButtonClickEvent(textView);
             }
         });
     }
@@ -51,22 +62,14 @@ public class ButtonClickHandler {
 
     private void setEachButtonClickEvent(Button button){
         if(button.getId() == R.id.category_button) setCategoryButtonClickEvent();
-
     }
 
-    private void setSearchButtonClickEvent(){
-        Intent intent = new Intent(activity.getApplicationContext(), SearchActivity.class);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    private void setEachButtonClickEvent(TextView textView){
+        if(textView.getId() == R.id.tv_Title) setTitleTextViewClickEvent();
     }
 
-    private void setBackButtonClickEvent(){
-        activity.finish();
-        activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-    }
-
-    private void setCategoryButtonClickEvent(){
-        Intent intent = new Intent(activity.getApplicationContext(), CategoryActivity.class);
-        activity.startActivityForResult(intent,101);
-    }
+    private void setSearchButtonClickEvent(){ intentUtil.moveToSearchActivity(); }
+    private void setBackButtonClickEvent(){ intentUtil.backToBeforeActivity(); }
+    private void setCategoryButtonClickEvent(){ intentUtil.moveToCategoryActivityForResult(); }
+    private void setTitleTextViewClickEvent(){ intentUtil.goHome();}
 }

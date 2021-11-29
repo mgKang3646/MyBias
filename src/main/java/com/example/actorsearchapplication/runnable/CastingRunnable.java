@@ -26,10 +26,8 @@ public class CastingRunnable implements Runnable{
 
     @Override
     public void run() {
-
         try {
             Response response = Servicey.getRestApi().getCastingMovie(id, Credentials.API_KEY).execute();
-
             if(response.code() == 200){
                 Log.v("Tag","CastingRunnable : code == 200");
                 List<ActorModel> casting = new ArrayList<>(((CastingResponse)response.body()).getCasting());

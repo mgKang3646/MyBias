@@ -4,22 +4,23 @@ import android.util.Log;
 
 import androidx.lifecycle.Observer;
 
+import com.example.actorsearchapplication.adapters.MainViewAdapter;
 import com.example.actorsearchapplication.adapters.SelectedViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
 
 public class SelectedActorObserver implements Observer<ActorModel> {
 
-    SelectedViewAdapter selectedViewAdapter;
+    MainViewAdapter mainViewAdapter;
 
-    public SelectedActorObserver(SelectedViewAdapter selectedViewAdapter){
-        this.selectedViewAdapter = selectedViewAdapter;
+    public SelectedActorObserver(MainViewAdapter mainViewAdapter){
+        this.mainViewAdapter = mainViewAdapter;
     }
 
     @Override
     public void onChanged(ActorModel actorModel) {
         if(actorModel != null){
-            selectedViewAdapter.setModel(actorModel);
-            selectedViewAdapter.onBind();
+            mainViewAdapter.setModel(actorModel);
+            mainViewAdapter.onBind();
         }
     }
 }

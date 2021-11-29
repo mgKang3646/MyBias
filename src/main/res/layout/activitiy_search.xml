@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout =  "@layout/toolbar_simple" />
+    <include layout = "@layout/toolbar_simple" />
 
     <SearchView
         android:id="@+id/searchView"
@@ -14,5 +15,14 @@
         android:background="#BDBDBD"
         android:queryHint="배우 이름 검색"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="10dp"
+        android:id="@+id/recyclerView_search"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 
 </LinearLayout>

@@ -7,7 +7,11 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.actorsearchapplication.ActorDetailActivity;
+import com.example.actorsearchapplication.CategoryActivity;
+import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.R;
+import com.example.actorsearchapplication.SearchActivity;
+import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 
 public class IntentUtil {
 
@@ -22,5 +26,37 @@ public class IntentUtil {
         intent.putExtra("id",id);
         currentActivity.startActivity(intent);
         currentActivity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    public void returnCategoryResult(int result){
+        Intent intent = new Intent();
+        intent.putExtra("category",result);
+        currentActivity.setResult(Activity.RESULT_OK,intent);
+        currentActivity.finish();
+    }
+
+    public void moveToCategoryActivityForResult(){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), CategoryActivity.class);
+        currentActivity.startActivityForResult(intent,101);
+    }
+
+    public void backToBeforeActivity(){
+        currentActivity.finish();
+        currentActivity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    public void moveToSearchActivity(){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), SearchActivity.class);
+        currentActivity.startActivity(intent);
+        currentActivity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    public void goHome(){
+        Intent intent = new Intent(currentActivity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 지금껏 열린 액티비티 청소하기
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
+        currentActivity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 }

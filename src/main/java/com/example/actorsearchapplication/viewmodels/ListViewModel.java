@@ -39,9 +39,9 @@ public class ListViewModel extends ViewModel {
     public void requestTvs() { MVVMFactory.getMainRepository().requestTvs(); }
 
     public void observe(LifecycleOwner owner, RecyclerView.Adapter recyclerViewAdapter){
-        getPopularActors().observe(owner,new ActorPopularObserver((MainRecyclerViewAdapter)recyclerViewAdapter));
-        getMovies().observe(owner,new MovieObserver((MainRecyclerViewAdapter)recyclerViewAdapter));
-        getTvs().observe(owner,new TvObserver((MainRecyclerViewAdapter)recyclerViewAdapter));
+        getPopularActors().observe(owner,new ActorPopularObserver(recyclerViewAdapter));
+        getMovies().observe(owner,new MovieObserver(recyclerViewAdapter));
+        getTvs().observe(owner,new TvObserver(recyclerViewAdapter));
     }
 
 }

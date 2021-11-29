@@ -25,16 +25,10 @@ public class MainViewUtil {
         return mainViewAdapter;
     }
 
-    public void inflate(Context context ,int layout, LinearLayout parent){
-        mainView = View.inflate(context,layout,parent);
-    }
+    public void inflate(Context context ,int layout, LinearLayout parent){ mainView = View.inflate(context,layout,parent); }
 
-    public void createSelectedViewAdapter(MainActivityViewListener mainActivityViewListener) {
-        mainViewAdapter = mainViewAdapterFactory.getSelectedViewAdapter(mainActivityViewListener,mainView);
-    }
-
-    public void createDetailViewAdapter(){
-        mainViewAdapter = mainViewAdapterFactory.getDetailAdapter(mainView);
-    }
-
+    public void createSelectedViewAdapter(MainActivityViewListener mainActivityViewListener) { mainViewAdapter = mainViewAdapterFactory.getSelectedViewAdapter(mainActivityViewListener,mainView); }
+    public void createActorDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getActorDetailAdapter(mainView); }
+    public void createMovieDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getMovieDetailAdapter(mainView); }
+    public void createTvDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getTvDetailAdapter(mainView); }
 }

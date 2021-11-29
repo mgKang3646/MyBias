@@ -5,6 +5,7 @@ import com.example.actorsearchapplication.response.FilmographyResponse;
 import com.example.actorsearchapplication.response.MovieDetailResponse;
 import com.example.actorsearchapplication.response.MoviePopularResponse;
 import com.example.actorsearchapplication.response.SearchPopularActorResponse;
+import com.example.actorsearchapplication.response.SearchResponse;
 import com.example.actorsearchapplication.response.TvDetailResponse;
 import com.example.actorsearchapplication.response.TvPopularResponse;
 
@@ -67,5 +68,12 @@ public interface RestAPI {
     Call<CastingResponse> getCastingTV(
             @Path("tv_id" ) int tv_id,
             @Query("api_key") String api_key
+    );
+
+    @GET("search/person")
+    Call<SearchResponse> getSearchedActors(
+            @Query("api_key") String apiKey,
+            @Query("query") String name,
+            @Query("page") String pageNum
     );
 }
