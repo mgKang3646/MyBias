@@ -11,6 +11,7 @@ import com.example.actorsearchapplication.CategoryActivity;
 import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.SearchActivity;
+import com.example.actorsearchapplication.SearchImageActivity;
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 
 public class IntentUtil {
@@ -58,5 +59,10 @@ public class IntentUtil {
         currentActivity.startActivity(intent);
         currentActivity.finish();
         currentActivity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    public void moveToSearchImageActivity(){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), SearchImageActivity.class);
+        currentActivity.startActivity(intent);
     }
 }

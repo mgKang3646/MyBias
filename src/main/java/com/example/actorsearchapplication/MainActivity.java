@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
     // 뷰 컴포넌트
     TabLayout tab;
     TabItem tabItem_popularActor, tabItem_trend, tabItem_myActor;
-    ImageButton search_button;
+    ImageButton search_button,search_image_button;
     Button category_button;
     RecyclerView recyclerView;
     LinearLayout layout_parent_selected;
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
         tabItem_popularActor = findViewById(R.id.tabItem_popularActor);
         tabItem_trend = findViewById(R.id.tabItem_trend);
         search_button = findViewById(R.id.search_button);
+        search_image_button = findViewById(R.id.search_image_button);
         category_button = findViewById(R.id.category_button);
         category_button.setVisibility(View.INVISIBLE);
     }
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
         tab.addOnTabSelectedListener(new TabLayoutHandler(this));
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(search_button);
+        buttonClickHandler.setOnClickEvent(search_image_button);
         buttonClickHandler.setOnClickEvent(category_button);
     }
 

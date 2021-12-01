@@ -58,6 +58,7 @@ public class ButtonClickHandler {
     private void setEachButtonClickEvent(ImageButton button){
         if(button.getId() == R.id.search_button) setSearchButtonClickEvent();
         else if(button.getId() == R.id.backButton) setBackButtonClickEvent();
+        else if(button.getId() == R.id.search_image_button) setSearchImageButtonClickEvent();
     }
 
     private void setEachButtonClickEvent(Button button){
@@ -68,8 +69,10 @@ public class ButtonClickHandler {
         if(textView.getId() == R.id.tv_Title) setTitleTextViewClickEvent();
     }
 
+    private void setSearchImageButtonClickEvent(){ intentUtil.moveToSearchImageActivity(); }
     private void setSearchButtonClickEvent(){ intentUtil.moveToSearchActivity(); }
     private void setBackButtonClickEvent(){ intentUtil.backToBeforeActivity(); }
     private void setCategoryButtonClickEvent(){ intentUtil.moveToCategoryActivityForResult(); }
     private void setTitleTextViewClickEvent(){ intentUtil.goHome();}
+
 }
