@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +21,10 @@
         android:theme="@style/Theme.ActorSearchApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".CaptureResultActivity"
+            android:name=".ImageSearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectedImageActivity"
             android:exported="false" />
         <activity
             android:name=".CameraCaptureActivity"

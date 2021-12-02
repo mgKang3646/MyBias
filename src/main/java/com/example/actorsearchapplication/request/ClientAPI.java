@@ -15,6 +15,7 @@ import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.runnable.CastingRunnable;
 import com.example.actorsearchapplication.runnable.CastingTvRunnable;
 import com.example.actorsearchapplication.runnable.FilmographyRunnable;
+import com.example.actorsearchapplication.runnable.ImageSearchedActorRunnable;
 import com.example.actorsearchapplication.runnable.MovieDetailRunnable;
 import com.example.actorsearchapplication.runnable.MovieRunnable;
 import com.example.actorsearchapplication.runnable.SearchRunnable;
@@ -88,6 +89,12 @@ public class ClientAPI {
         SearchRunnable searchRunnable = new SearchRunnable(this,name);
         Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(searchRunnable);
         MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
+    public void setSearchedActor(ActorModel searchedActor){
+            ImageSearchedActorRunnable imageSearchedActorRunnable = new ImageSearchedActorRunnable(searchedActor);
+            Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(imageSearchedActorRunnable);
+            MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
     public MutableLiveData<List<ActorModel>> getPopularActors() {

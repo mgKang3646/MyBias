@@ -3,16 +3,25 @@ package com.example.actorsearchapplication.viewutil;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.actorsearchapplication.ActorDetailActivity;
+import com.example.actorsearchapplication.CameraCaptureActivity;
 import com.example.actorsearchapplication.CategoryActivity;
+import com.example.actorsearchapplication.ImageSearchResultActivity;
 import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.SearchActivity;
 import com.example.actorsearchapplication.SearchImageActivity;
+import com.example.actorsearchapplication.SelectedImageActivity;
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
+import com.example.actorsearchapplication.models.ActorModel;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class IntentUtil {
 
@@ -64,5 +73,32 @@ public class IntentUtil {
     public void moveToSearchImageActivity(){
         Intent intent = new Intent(currentActivity.getApplicationContext(), SearchImageActivity.class);
         currentActivity.startActivity(intent);
+    }
+
+    public void moveToCameraCaptureActivity(){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), CameraCaptureActivity.class);
+        currentActivity.startActivity(intent);
+    }
+
+    public void moveToGalleryForResult(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        currentActivity.startActivityForResult(intent,SearchImageActivity.REQUEST_GET_IMAGE_FROM_GALLERY);
+    }
+
+    public void moveToImageSearchResultActivity(List<ActorModel> awsSearchedActors){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), ImageSearchResultActivity.class);
+        intent.putExtra("actorList", (Serializable) awsSearchedActors);
+        currentActivity.startActivity(intent);
+    }
+
+    public void moveToSelectedImageActivity(Uri selectedImageUri){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), SelectedImageActivity.class);
+        intent.putExtra("SelectedImageUri",selectedImageUri);
+        currentActivity.startActivity(intent);
+    }
+
+    public void finish(){
+        currentActivity.finish();
     }
 }

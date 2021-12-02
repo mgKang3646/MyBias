@@ -109,6 +109,7 @@ public class CameraCaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startStillCaptureRequest();
+
             }
         });
     }
@@ -324,12 +325,6 @@ public class CameraCaptureActivity extends AppCompatActivity {
                     }
                 }
 
-                @Override
-                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                    super.onCaptureCompleted(session, request, result);
-                    moveCaptureResultActivity();
-                }
-
             };
             //사진 캡처 요청하기 Submit a request for an image to be captured by the camera device.
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);
@@ -399,47 +394,14 @@ public class CameraCaptureActivity extends AppCompatActivity {
     }
 
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
+
         @Override //카메라로부터 이미지를 받은 경우
         public void onImageAvailable(ImageReader imageReader) {
                 //ImageReader가 acquire한 최신이미지를 ImageSaver Runnable이 Handler에 post되어서 처리된다.
                 mBackgroundHandler.post(new ImageSaver(imageReader.acquireLatestImage()));
+                //mBackgroundHandler.post(new MoveIntent());
         }
     };
-
-//    private CameraCaptureSession.CaptureCallback mPreviewCaptureCallback = new CameraCaptureSession.CaptureCallback() {
-//
-//        private void process(CaptureResult captureResult){
-//            switch (mCaptureState){
-//                case STATE_PREVIEW : break;
-//                case STATE_WAIT_LOCK:
-//                    mCaptureState = STATE_PREVIEW;
-//                    Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
-//                    Toast.makeText(getApplicationContext(),"AF Locked Before!",Toast.LENGTH_SHORT).show();
-//
-//                    if(afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED ||
-//                            afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED ){
-//                        Toast.makeText(getApplicationContext(),"AF Locked!",Toast.LENGTH_SHORT).show();
-//                        startStillCaptureRequest();
-//                    }
-//                    break;
-//            }
-//        }
-//        @Override
-//        public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-//            super.onCaptureCompleted(session, request, result);
-//            process(result);
-//        }
-//    };
-//    private void lockFocus(){
-//        mCaptureState = STATE_WAIT_LOCK; // STATE 변환
-//        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_START); // SYSTEM에 Capture를 요청할 Request를 Build
-//
-//        try {
-//            mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),mPreviewCaptureCallback,mBackgroundHandler);
-//        } catch (CameraAccessException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     ///File 생성
     private void createImageFolder() {
@@ -452,19 +414,14 @@ public class CameraCaptureActivity extends AppCompatActivity {
 
     private File createImageFileName() throws IOException{
         String timestamp = new SimpleDateFormat(("yyyyMMdd HHmmss")).format(new Date());
-        String prepend = "IMAGE_"+timestamp+"_";
+        String prepend = "MYBIAS_"+timestamp+"_";
         File imageFile = File.createTempFile(prepend,".jpg",mImageFolder);
         mImageFileName = imageFile.getAbsolutePath();
         return imageFile;
     }
 
-    private void moveCaptureResultActivity(){
-        Intent intent = new Intent(getApplicationContext(),CaptureResultActivity.class);
-        intent.putExtra("CapturedImageBytes",bytes);
-        startActivity(intent);
-    }
-
     // Background Handler에서 처리되어 질 Runnable
+
     private class ImageSaver implements Runnable{
 
         private final Image mImage;
@@ -477,26 +434,31 @@ public class CameraCaptureActivity extends AppCompatActivity {
         public void run() {
             ByteBuffer byteBuffer = mImage.getPlanes()[0].getBuffer();
             bytes = new byte[byteBuffer.remaining()];
-            ///byteBuffer.get(bytes);
+            byteBuffer.get(bytes);
 
-         //   FileOutputStream fileOutputStream = null;
-//            try {
-//                fileOutputStream = new FileOutputStream(mImageFileName);
-//                fileOutputStream.write(bytes);
-//                Toast.makeText(getApplicationContext(),"ImageSaver : mImageFileName로 전달",Toast.LENGTH_SHORT).show();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }finally{
-//                mImage.close();
-//                if(fileOutputStream != null){
-//                    try {
-//                        fileOutputStream.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(mImageFileName);
+                fileOutputStream.write(bytes);
+                Toast.makeText(getApplicationContext(),"ImageSaver : mImageFileName로 전달",Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally{
+                mImage.close();
+                if(fileOutputStream != null){
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
         }
     }
+
+
+
+
+
 }
