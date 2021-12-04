@@ -1,13 +1,14 @@
 package com.example.actorsearchapplication.viewutil;
 
-import android.app.Dialog;
-import android.view.View;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 
-import com.example.actorsearchapplication.DibsDialog;
 import com.example.actorsearchapplication.MainActivity;
-import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.models.UrlModel;
-import com.example.actorsearchapplication.room.DibsDto;
 import com.google.android.material.tabs.TabLayout;
 
 public class TabLayoutHandler implements TabLayout.OnTabSelectedListener {
@@ -21,16 +22,14 @@ public class TabLayoutHandler implements TabLayout.OnTabSelectedListener {
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         UrlModel.setPage("1");
-        if(tab.getPosition() == 0){
-            mainActivity.getCategoryButton().setVisibility(View.INVISIBLE);
-            mainActivity.getListViewModel().requestPopularActors();
+        if(tab.getPosition() == MainActivity.MODE_ACTOR){
+            mainActivity.clickActorEvent();
         }
-        else if(tab.getPosition() == 1) {
-            mainActivity.getCategoryButton().setVisibility(View.VISIBLE);
-            mainActivity.getListViewModel().requestMovies();
-        }else if(tab.getPosition() == 2){
-            DibsDialog dibsDialog = new DibsDialog(mainActivity);
-            dibsDialog.show();
+        else if(tab.getPosition() == MainActivity.MODE_MOVIE_TV) {
+            mainActivity.clickMovieTvEvent();
+
+        }else if(tab.getPosition() == mainActivity.MODE_DIBS){
+            mainActivity.clickDibsEvent();
         }
     }
 

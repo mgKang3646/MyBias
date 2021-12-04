@@ -21,11 +21,11 @@ public class SelectedViewAdapter implements MainViewAdapter{
     private SelectedViewHolder selectedViewHolder;
     private int mode;
 
-    MainActivityViewListener mainActivityViewListener;
+    MainContentViewHolder mainContentViewHolder;
 
-    public SelectedViewAdapter(MainActivityViewListener mainActivityViewListener, View selectedView){
-        this.mainActivityViewListener = mainActivityViewListener;
-        this.selectedViewHolder = new SelectedViewHolder(selectedView, mainActivityViewListener);
+    public SelectedViewAdapter(MainContentViewHolder mainContentViewHolder, View selectedView){
+        this.mainContentViewHolder = mainContentViewHolder;
+        this.selectedViewHolder = new SelectedViewHolder(selectedView, mainContentViewHolder);
     }
 
     @Override

@@ -79,12 +79,12 @@ public class ActorDetailViewHolder {
                 if(!isClickedDibs){ // 찜 하기
                     LottieUtil.setColor(heart_anime,Color.parseColor("#e92b50"));
                     MVVMFactory.getRoomUtil(view.getContext()).insertActor(actorModel);
-                    Toast.makeText(view.getContext(),"찜 완료!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"찜!",Toast.LENGTH_SHORT).show();
                     isClickedDibs = true;
                 }else{ // 찜 제거
                     LottieUtil.setColor(heart_anime,Color.parseColor("#F6F6F6"));
                     MVVMFactory.getRoomUtil(view.getContext()).deleteActor(actorModel);
-                    Toast.makeText(view.getContext(),"찜 해제!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"안 찜!",Toast.LENGTH_SHORT).show();
                     isClickedDibs = false;
                 }
             }

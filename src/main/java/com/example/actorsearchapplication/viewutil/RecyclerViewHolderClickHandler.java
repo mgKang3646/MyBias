@@ -9,6 +9,7 @@ import com.example.actorsearchapplication.ActorDetailActivity;
 import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.MovieDetailActivity;
 import com.example.actorsearchapplication.TvDetailActivity;
+import com.example.actorsearchapplication.adapters.MainContentViewHolder;
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.adapters.RecyclerViewHolder;
 
@@ -44,13 +45,13 @@ public class RecyclerViewHolderClickHandler {
         });
     }
 
-    public void setMainRecyclerClickEvent(MainActivityViewListener mainActivityViewListener){
+    public void setMainRecyclerClickEvent(MainContentViewHolder mainContentViewHolder){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int mode = holder.getRecyclerHolderClickModel().getMode();
                 int position = holder.getRecyclerHolderClickModel().getId();
-                mainActivityViewListener.requestSwitchSelected(mode,position);
+                mainContentViewHolder.requestSwitchSelected(mode,position);
             }
         });
     }

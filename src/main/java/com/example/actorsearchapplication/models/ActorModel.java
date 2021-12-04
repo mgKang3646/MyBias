@@ -1,11 +1,7 @@
 package com.example.actorsearchapplication.models;
 
 
-import android.database.Cursor;
-
-
 import com.amazonaws.services.rekognition.model.Celebrity;
-import com.example.actorsearchapplication.DibsDialog;
 import com.example.actorsearchapplication.room.DibsDto;
 
 import java.io.Serializable;

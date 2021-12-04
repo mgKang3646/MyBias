@@ -25,10 +25,10 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder implements R
     private int position;
 
 
-    public MainRecyclerViewHolder(@NonNull View itemView, MainActivityViewListener mainActivityViewListener) {
+    public MainRecyclerViewHolder(@NonNull View itemView, MainContentViewHolder mainContentViewHolder) {
         super(itemView);
         setFindViewById();
-        setClickEvent(mainActivityViewListener);
+        setClickEvent(mainContentViewHolder);
     }
 
     private void setFindViewById(){
@@ -37,9 +37,9 @@ public class MainRecyclerViewHolder extends RecyclerView.ViewHolder implements R
         popularity = itemView.findViewById(R.id.tv_popularity_holder);
     }
 
-    private void setClickEvent(MainActivityViewListener mainActivityViewListener){
+    private void setClickEvent(MainContentViewHolder mainContentViewHolder){
         RecyclerViewHolderClickHandler recyclerViewHolderClickHandler = new RecyclerViewHolderClickHandler(this);
-        recyclerViewHolderClickHandler.setMainRecyclerClickEvent(mainActivityViewListener);
+        recyclerViewHolderClickHandler.setMainRecyclerClickEvent(mainContentViewHolder);
     }
 
     public void setMode(int mode) { this.mode = mode; }

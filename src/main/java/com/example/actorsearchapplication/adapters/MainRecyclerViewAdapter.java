@@ -29,19 +29,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private List<MovieModel> movies;
     private List<TvModel> tvs;
 
-    private MainActivityViewListener mainActivityViewListener;
+    private MainContentViewHolder mainContentViewHolder;
 
     private int mode = 0;
 
-    public MainRecyclerViewAdapter(MainActivityViewListener mainActivityViewListener){
-        this.mainActivityViewListener = mainActivityViewListener;
+    public MainRecyclerViewAdapter(MainContentViewHolder mainContentViewHolder){
+        this.mainContentViewHolder = mainContentViewHolder;
     }
 
     @NonNull
     @Override
     public MainRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycler_holder,parent,false);
-        return new MainRecyclerViewHolder(view, mainActivityViewListener);
+        return new MainRecyclerViewHolder(view, mainContentViewHolder);
     }
 
     @Override
@@ -75,6 +75,6 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void setMode(int mode){ this.mode = mode; }
 
     public void requestSwitchSelected(){
-        mainActivityViewListener.requestSwitchSelected(mode,0);
+        mainContentViewHolder.requestSwitchSelected(mode,0);
     }
 }

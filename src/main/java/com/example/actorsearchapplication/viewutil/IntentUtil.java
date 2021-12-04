@@ -99,6 +99,7 @@ public class IntentUtil {
     }
 
     public void finish(){
+
         currentActivity.finish();
     }
 }

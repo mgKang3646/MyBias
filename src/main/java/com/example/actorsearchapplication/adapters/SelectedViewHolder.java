@@ -20,16 +20,16 @@ public class SelectedViewHolder {
     ImageView selectedImageView, selectedIconImageView;
     TextView selectedName;
     TextView selectedPopularity;
-    MainActivityViewListener mainActivityViewListener;
+    MainContentViewHolder mainContentViewHolder;
     View view;
 
     private int id;
     private int mode;
 
-    public SelectedViewHolder(View view, MainActivityViewListener mainActivityViewListener) {
+    public SelectedViewHolder(View view, MainContentViewHolder mainContentViewHolder) {
         setView(view);
         setFindViewById();
-        setClickEvent(mainActivityViewListener);
+        setClickEvent(mainContentViewHolder);
     }
 
     private void setView(View view){
@@ -43,18 +43,18 @@ public class SelectedViewHolder {
         selectedIconImageView = view.findViewById(R.id.iv_ic_selected);
     }
 
-    private void setClickEvent(MainActivityViewListener mainActivityViewListener){
+    private void setClickEvent(MainContentViewHolder mainContentViewHolder){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mode == MainRecyclerViewAdapter.MODE_POPULAR_ACTORS){
-                    mainActivityViewListener.moveDetailPage(ActorDetailActivity.class,id);
+                    mainContentViewHolder.moveDetailPage(ActorDetailActivity.class,id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_MOVIE){
-                    mainActivityViewListener.moveDetailPage(MovieDetailActivity.class,id);
+                    mainContentViewHolder.moveDetailPage(MovieDetailActivity.class,id);
                 }
                 else if(mode == MainRecyclerViewAdapter.MODE_TV){
-                    mainActivityViewListener.moveDetailPage(TvDetailActivity.class,id);
+                    mainContentViewHolder.moveDetailPage(TvDetailActivity.class,id);
                 }
             }
         });
