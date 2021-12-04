@@ -17,11 +17,14 @@ import com.airbnb.lottie.value.LottieValueCallback;
 import com.bumptech.glide.Glide;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorDetailModel;
+import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.utils.MVVMFactory;
 import com.example.actorsearchapplication.viewutil.GlideUtil;
 import com.example.actorsearchapplication.viewutil.LottieUtil;
 
 public class ActorDetailViewHolder {
 
+    private ActorModel actorModel;
     private ImageView iv_actor;
     private TextView tv_popularity_actor, tv_name_actor, tv_birth_actor, tv_add_overview_actor, tv_overview_actor, tv_birth_place_actor;
     private View view;
@@ -59,24 +62,29 @@ public class ActorDetailViewHolder {
     }
 
     public void onBind(ActorDetailModel actorDetailModel){
+        actorModel = new ActorModel(actorDetailModel);
         overView = actorDetailModel.getBiography(); //OverView 한 단락으로 줄이기
         tv_birth_actor.setText(actorDetailModel.getBirthday());
         tv_birth_place_actor.setText(actorDetailModel.getPlace_of_birth());
         tv_name_actor.setText(actorDetailModel.getName());
         tv_popularity_actor.setText(Math.round(actorDetailModel.getPopularity()*10)/10.0+"");
         GlideUtil.loadProfileImage(view.getContext(),actorDetailModel.getProfile_path(),iv_actor);
+        setLottieView();
     }
 
     private void setDibsClickEvent(){
-        LottieUtil.setColor(heart_anime,Color.parseColor("#F6F6F6"));
         heart_anime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isClickedDibs){
+                if(!isClickedDibs){ // 찜 하기
                     LottieUtil.setColor(heart_anime,Color.parseColor("#e92b50"));
+                    MVVMFactory.getRoomUtil(view.getContext()).insertActor(actorModel);
+                    Toast.makeText(view.getContext(),"찜 완료!",Toast.LENGTH_SHORT).show();
                     isClickedDibs = true;
-                }else{
+                }else{ // 찜 제거
                     LottieUtil.setColor(heart_anime,Color.parseColor("#F6F6F6"));
+                    MVVMFactory.getRoomUtil(view.getContext()).deleteActor(actorModel);
+                    Toast.makeText(view.getContext(),"찜 해제!",Toast.LENGTH_SHORT).show();
                     isClickedDibs = false;
                 }
             }
@@ -97,5 +105,15 @@ public class ActorDetailViewHolder {
                 }
             }
         });
+    }
+
+    private void setLottieView(){
+        if(MVVMFactory.getRoomUtil(view.getContext()).isDibsActor(actorModel.getId())){
+            LottieUtil.setColor(heart_anime,Color.parseColor("#e92b50"));
+            isClickedDibs = true;
+        }else{
+            LottieUtil.setColor(heart_anime,Color.parseColor("#F6F6F6"));
+            isClickedDibs = false;
+        }
     }
 }

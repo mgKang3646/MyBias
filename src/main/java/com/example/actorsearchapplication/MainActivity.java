@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.adapters.MainViewAdapter;
@@ -75,17 +76,17 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewL
             int mode = data.getIntExtra("category",-1); // -1은 그냥 종료한 경우
             if(mode == MainRecyclerViewAdapter.MODE_MOVIE) listViewModel.requestMovies();
             else if(mode == MainRecyclerViewAdapter.MODE_TV) listViewModel.requestTvs();
+
         }
     }
     @Override
     public void requestSwitchSelected(int mode, int position) { selectedViewModel.switchSelected(mode,position); }
     @Override
     public void moveDetailPage(Class className, int id) { intentUtil.moveToDetailActivity(className,id); }
-    @Override
+
     public ListViewModel getListViewModel(){
         return listViewModel;
     }
-    @Override
     public Button getCategoryButton(){
         return category_button;
     }

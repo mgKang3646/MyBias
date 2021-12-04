@@ -8,7 +8,6 @@ public interface MainActivityViewListener {
 
     void requestSwitchSelected(int mode, int position);
     void moveDetailPage(Class className, int id);
-    ListViewModel getListViewModel();
-    Button getCategoryButton();
+
 
 }

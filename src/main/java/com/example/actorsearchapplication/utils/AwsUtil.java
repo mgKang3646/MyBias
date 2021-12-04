@@ -46,9 +46,7 @@ public class AwsUtil {
         if (celebs.size() != 0) {
             awsSearchedActors = new ArrayList<ActorModel>();
             for (Celebrity celebrity : celebs) {
-                ActorModel searchedActor = new ActorModel();
-                searchedActor.setName(celebrity.getName());
-                searchedActor.setMatchConfidence(celebrity.getMatchConfidence());
+                ActorModel searchedActor = new ActorModel(celebrity);
                 awsSearchedActors.add(searchedActor);
             }
         }

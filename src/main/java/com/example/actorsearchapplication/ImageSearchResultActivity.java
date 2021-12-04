@@ -5,9 +5,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.actorsearchapplication.adapters.ImageSearchRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 import com.example.actorsearchapplication.viewutil.IntentUtil;
 import com.example.actorsearchapplication.viewutil.RecyclerViewUtil;
 import com.example.actorsearchapplication.viewutil.StatusBar;
@@ -19,14 +22,23 @@ public class ImageSearchResultActivity extends AppCompatActivity implements Acti
     private List<ActorModel> searchedActors;
     private RecyclerView recyclerView;
     private IntentUtil intentUtil;
+
+    private TextView titleView;
+    private ImageButton backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBar.setStatusBar(this);
         setContentView(R.layout.activity_image_search_result);
         recyclerView = findViewById(R.id.recyclerView_image_search);
-
+        titleView = findViewById(R.id.tv_Title);
+        backButton = findViewById(R.id.backButton);
         intentUtil = new IntentUtil(this);
+
+        ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
+        buttonClickHandler.setOnClickEvent(titleView);
+        buttonClickHandler.setOnClickEvent(backButton);
 
         Intent intent = getIntent();
         searchedActors = (ArrayList<ActorModel>)intent.getSerializableExtra("actorList");

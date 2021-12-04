@@ -56,7 +56,7 @@ public class SearchImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_image);
         cameraButton = findViewById(R.id.btn_camera);
         galleryButton = findViewById(R.id.btn_gallery);
-        closeButton = findViewById(R.id.btn_floating_search);
+        closeButton = findViewById(R.id.btn_floating_search_close);
 
         intentUtil = new IntentUtil(this);
 
@@ -72,17 +72,18 @@ public class SearchImageActivity extends AppCompatActivity {
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(cameraButton);
         buttonClickHandler.setOnClickEvent(galleryButton);
+        buttonClickHandler.setOnClickEvent(closeButton);
     }
 
     PermissionListener permissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
-            Toast.makeText(getApplicationContext(), "권한이 허용됨",Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
             Toast.makeText(getApplicationContext(), "권한이 거부됨",Toast.LENGTH_SHORT).show();
+            intentUtil.finish();
         }
     };
 

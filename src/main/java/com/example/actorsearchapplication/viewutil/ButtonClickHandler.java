@@ -67,6 +67,7 @@ public class ButtonClickHandler {
         else if(button.getId() == R.id.btn_image_search_back) setImageSearchBackButtonEvent();
         else if(button.getId() == R.id.btn_camera) setCameraButtonEvent();
         else if(button.getId() == R.id.btn_gallery) setGalleryButtonEvent();
+        else if(button.getId() == R.id.btn_floating_search_close) setCloseActivityButtonEvent();
     }
 
     private void setEachButtonClickEvent(Button button){
@@ -85,6 +86,7 @@ public class ButtonClickHandler {
     private void setImageSearchBackButtonEvent() { intentUtil.finish(); }
     private void setCameraButtonEvent(){ intentUtil.moveToCameraCaptureActivity();}
     private void setGalleryButtonEvent() { intentUtil.moveToGalleryForResult();}
+    private void setCloseActivityButtonEvent() { intentUtil.finish(); }
 
     public void setImageAnalysisButtonEvent(ImageButton analysisButton, Bitmap bitmap, int mimeType){
         analysisButton.setOnClickListener(new View.OnClickListener() {

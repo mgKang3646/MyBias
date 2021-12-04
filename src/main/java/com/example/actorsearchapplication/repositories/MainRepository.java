@@ -1,5 +1,6 @@
 package com.example.actorsearchapplication.repositories;
 
+import android.content.Context;
 import android.graphics.Movie;
 
 import androidx.lifecycle.MutableLiveData;
@@ -29,7 +30,6 @@ public class MainRepository {
     private MutableLiveData<List<FilmographyModel>> filmography;
     private MutableLiveData<List<ActorModel>> casting;
     private MutableLiveData<List<ActorModel>> searchedActors;
-    private MutableLiveData<List<ActorModel>> imageSearchedActors;
 
 
     public MainRepository(){
@@ -42,7 +42,6 @@ public class MainRepository {
         this.casting = new MutableLiveData<>();
         this.tvDetail = new MutableLiveData<>();
         this.searchedActors = new MutableLiveData<>();
-        this.imageSearchedActors = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<ActorModel>> getPopularActors(){
@@ -56,7 +55,6 @@ public class MainRepository {
     public MutableLiveData<List<ActorModel>> getCasting(){ return casting; }
     public MutableLiveData<TvDetailModel> getTvDetail() { return tvDetail; }
     public MutableLiveData<List<ActorModel>> getSearchedActors(){ return searchedActors; }
-    public MutableLiveData<List<ActorModel>> getImageSearchedActors() { return imageSearchedActors; }
 
     public void requestPopularActors(){ MVVMFactory.getClientAPI().requestPopularActors();}
     public void requestMovies(){ MVVMFactory.getClientAPI().requestMovies(); }

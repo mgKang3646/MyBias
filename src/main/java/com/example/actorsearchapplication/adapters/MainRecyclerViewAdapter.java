@@ -55,6 +55,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         }
         else if(mode == MODE_TV){
             holder.onBind(tvs.get(position));
+
         }
     }
 
