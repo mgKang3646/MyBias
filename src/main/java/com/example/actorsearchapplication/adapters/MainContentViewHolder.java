@@ -89,23 +89,17 @@ public class MainContentViewHolder {
         if(mode == MainActivity.MODE_ACTOR){
             category_button.setVisibility(View.INVISIBLE);
             listViewModel.requestPopularActors();
-        }else if(mode == MainActivity.MODE_MOVIE_TV){
+        }else if(mode == MainActivity.MODE_MOVIE){
             category_button.setVisibility(View.VISIBLE);
             listViewModel.requestMovies();
+        }else if(mode == MainActivity.MODE_TV){
+            category_button.setVisibility(View.VISIBLE);
+            listViewModel.requestTvs();
         }
     }
 
     public void setView(View view){
         this.view = view;
     }
-
-    //Tab구간
-    public ListViewModel getListViewModel(){
-        return listViewModel;
-    }
-    public Button getCategoryButton(){
-        return category_button;
-    }
-
 
 }

@@ -59,7 +59,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_casting_tv"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-                android:nestedScrollingEnabled="true"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

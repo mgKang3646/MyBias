@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.actorsearchapplication.MainActivity;
 import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.models.ActorModel;
@@ -20,9 +21,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     // 어댑터가 다양한 뷰 홀더를 처리하려면 제네릭을 RecyclerView.ViewHolder 추상클래스를 넣는다. ( 제어가 필요 )
     // 일단은 ActorRecyclerViewHolder 전용 어댑터로 구현한다.
 
-    public static final int MODE_POPULAR_ACTORS = 0;
-    public static final int MODE_MOVIE = 1;
-    public static final int MODE_TV = 2;
+    public static final int MODE_POPULAR_ACTORS = MainActivity.MODE_ACTOR;
+    public static final int MODE_MOVIE = MainActivity.MODE_MOVIE;
+    public static final int MODE_TV = MainActivity.MODE_TV;
 
 
     private List<ActorModel> actors;

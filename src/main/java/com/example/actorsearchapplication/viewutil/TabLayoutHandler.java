@@ -25,8 +25,8 @@ public class TabLayoutHandler implements TabLayout.OnTabSelectedListener {
         if(tab.getPosition() == MainActivity.MODE_ACTOR){
             mainActivity.clickActorEvent();
         }
-        else if(tab.getPosition() == MainActivity.MODE_MOVIE_TV) {
-            mainActivity.clickMovieTvEvent();
+        else if(tab.getPosition() == MainActivity.MODE_MOVIE) {
+            mainActivity.clickMovieEvent();
 
         }else if(tab.getPosition() == mainActivity.MODE_DIBS){
             mainActivity.clickDibsEvent();

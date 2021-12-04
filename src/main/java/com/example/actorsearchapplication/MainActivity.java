@@ -51,8 +51,9 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
 
     public static final int MODE_ACTOR = 0;
-    public static final int MODE_MOVIE_TV = 1;
+    public static final int MODE_MOVIE = 1;
     public static final int MODE_DIBS = 2;
+    public static final int MODE_TV = 3;
     public int currentMode;
 
     TabLayout tab;
@@ -85,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(currentMode == MODE_ACTOR) clickActorEvent();
-        else if(currentMode == MODE_MOVIE_TV) clickMovieTvEvent();
+        else if(currentMode == MODE_MOVIE) clickMovieEvent();
+        else if(currentMode == MODE_TV) clickTvEvent();
         else if(currentMode == MODE_DIBS) clickDibsEvent();
     }
 
@@ -93,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101){ // 카테고리 설정
-            int mode = data.getIntExtra("category",-1);
-            mainContentViewAdapter.notifyCategoryChanged(mode);
+            currentMode = data.getIntExtra("category",-1);
+            mainContentViewAdapter.notifyCategoryChanged(currentMode);
         }
     }
 
@@ -136,10 +138,14 @@ public class MainActivity extends AppCompatActivity {
         mainContentViewAdapter.requestChangeMode(MODE_ACTOR);
         TransitionUtil.setSceneTransition(mainScene);
     }
-    public void clickMovieTvEvent(){
-        currentMode = MODE_MOVIE_TV;
-        mainContentViewAdapter.requestChangeMode(MODE_MOVIE_TV);
+    public void clickMovieEvent(){
+        currentMode = MODE_MOVIE;
+        mainContentViewAdapter.requestChangeMode(MODE_MOVIE);
         TransitionUtil.setSceneTransition(mainScene);
+    }
+    public void clickTvEvent(){
+        currentMode = MODE_TV;
+        mainContentViewAdapter.requestChangeMode(MODE_TV);
     }
     public void clickDibsEvent(){
         currentMode = MODE_DIBS;

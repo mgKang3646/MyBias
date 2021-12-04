@@ -31,7 +31,7 @@ public class AwsUtil {
     }
 
     private void setAWSClient(){
-        AWSCredentials credentials = new BasicAWSCredentials("AKIAVU53PT5HRYNVS2FX", "pSWWg00rsWFKXIFJgsOmNp2TwFoWvjCFNrm31Pg0");
+        AWSCredentials credentials = new BasicAWSCredentials(,);
         amazonRekognitionClient = new AmazonRekognitionClient(credentials);
         amazonRekognitionClient.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
     }

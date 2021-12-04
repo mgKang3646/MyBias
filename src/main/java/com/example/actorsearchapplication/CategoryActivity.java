@@ -36,7 +36,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tv_category_movie.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                intentUtil.returnCategoryResult(MainRecyclerViewAdapter.MODE_MOVIE);
+                intentUtil.returnCategoryResult(MainActivity.MODE_MOVIE);
             }
         });
 
@@ -44,7 +44,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tv_category_series.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                intentUtil.returnCategoryResult(MainRecyclerViewAdapter.MODE_TV);
+                intentUtil.returnCategoryResult(MainActivity.MODE_TV);
             }
         });
 

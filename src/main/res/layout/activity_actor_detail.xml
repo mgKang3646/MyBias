@@ -67,6 +67,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_filmography"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
