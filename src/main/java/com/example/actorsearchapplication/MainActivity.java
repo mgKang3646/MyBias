@@ -85,18 +85,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(currentMode == MODE_ACTOR) clickActorEvent();
-        else if(currentMode == MODE_MOVIE) clickMovieEvent();
-        else if(currentMode == MODE_TV) clickTvEvent();
-        else if(currentMode == MODE_DIBS) clickDibsEvent();
+        if(currentMode == MODE_DIBS) clickDibsEvent();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101){ // 카테고리 설정
-            currentMode = data.getIntExtra("category",-1);
-            mainContentViewAdapter.notifyCategoryChanged(currentMode);
+            mainContentViewAdapter.notifyCategoryChanged(data.getIntExtra("category",-1));
         }
     }
 
@@ -143,10 +139,7 @@ public class MainActivity extends AppCompatActivity {
         mainContentViewAdapter.requestChangeMode(MODE_MOVIE);
         TransitionUtil.setSceneTransition(mainScene);
     }
-    public void clickTvEvent(){
-        currentMode = MODE_TV;
-        mainContentViewAdapter.requestChangeMode(MODE_TV);
-    }
+
     public void clickDibsEvent(){
         currentMode = MODE_DIBS;
         dibsViewAdapter.refresh();

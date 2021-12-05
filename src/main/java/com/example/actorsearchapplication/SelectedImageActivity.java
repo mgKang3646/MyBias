@@ -1,16 +1,20 @@
 package com.example.actorsearchapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
@@ -45,6 +49,7 @@ import com.example.actorsearchapplication.viewutil.StatusBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -92,6 +97,7 @@ public class SelectedImageActivity extends AppCompatActivity {
     private void getImageUri(){
         Intent intent = getIntent();
         imageUri = intent.getParcelableExtra("SelectedImageUri");
+        Log.v("Tag",imageUri.toString());
         checkMimeType();
     }
 
@@ -120,6 +126,7 @@ public class SelectedImageActivity extends AppCompatActivity {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         mimeType = mime.getExtensionFromMimeType(cR.getType(imageUri));
+        Log.v("Tag","Mime Type : " + mimeType);
     }
 
     public void onAnalysisUi(){
@@ -133,7 +140,5 @@ public class SelectedImageActivity extends AppCompatActivity {
         loading_background.setVisibility(View.INVISIBLE);
         loadingView.setVisibility(View.INVISIBLE);
     }
-
-
 
 }

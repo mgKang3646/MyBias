@@ -20,6 +20,7 @@ import com.example.actorsearchapplication.SelectedImageActivity;
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -96,6 +97,14 @@ public class IntentUtil {
         Intent intent = new Intent(currentActivity.getApplicationContext(), SelectedImageActivity.class);
         intent.putExtra("SelectedImageUri",selectedImageUri);
         currentActivity.startActivity(intent);
+    }
+
+    public void scanAndBroadCastImage(String imagePath){
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(imagePath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        currentActivity.sendBroadcast(mediaScanIntent);
     }
 
     public void finish(){

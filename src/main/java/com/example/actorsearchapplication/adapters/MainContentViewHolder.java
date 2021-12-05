@@ -81,8 +81,8 @@ public class MainContentViewHolder {
     }
 
     public void changeContents(int mode){
-        if(mode == MainRecyclerViewAdapter.MODE_MOVIE) listViewModel.requestMovies();
-        else if(mode == MainRecyclerViewAdapter.MODE_TV) listViewModel.requestTvs();
+        if(mode == MainActivity.MODE_MOVIE) listViewModel.requestMovies();
+        else if(mode == MainActivity.MODE_TV) listViewModel.requestTvs();
     }
 
     public void changeMode(int mode){
