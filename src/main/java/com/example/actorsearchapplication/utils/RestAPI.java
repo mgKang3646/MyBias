@@ -6,6 +6,7 @@ import com.example.actorsearchapplication.response.MovieDetailResponse;
 import com.example.actorsearchapplication.response.MoviePopularResponse;
 import com.example.actorsearchapplication.response.SearchPopularActorResponse;
 import com.example.actorsearchapplication.response.SearchResponse;
+import com.example.actorsearchapplication.response.SnsIdResponse;
 import com.example.actorsearchapplication.response.TvDetailResponse;
 import com.example.actorsearchapplication.response.TvPopularResponse;
 
@@ -76,4 +77,12 @@ public interface RestAPI {
             @Query("query") String name,
             @Query("page") String pageNum
     );
+
+    @GET("person/{person_id}/external_ids")
+    Call<SnsIdResponse> getSNSId(
+            @Path("person_id") int person_id,
+            @Query("api_key") String apiKey
+    );
+
+
 }

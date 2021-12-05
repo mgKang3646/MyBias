@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.actorsearchapplication.ActorDetailActivity;
 import com.example.actorsearchapplication.models.ActorDetailModel;
 
 public class ActorDetailViewAdapter implements MainViewAdapter {
@@ -11,10 +12,11 @@ public class ActorDetailViewAdapter implements MainViewAdapter {
     private View actorDetailView;
     private ActorDetailViewHolder actorDetailViewHolder;
     private ActorDetailModel actorDetailModel;
+    private ActorDetailActivity actorDetailActivity;
 
-    public ActorDetailViewAdapter(View actorDetailView){
+    public ActorDetailViewAdapter(View actorDetailView, ActorDetailActivity actorDetailActivity){
         this.actorDetailView = actorDetailView;
-        this.actorDetailViewHolder = new ActorDetailViewHolder(actorDetailView);
+        this.actorDetailViewHolder = new ActorDetailViewHolder(actorDetailView,actorDetailActivity);
     }
 
     @Override

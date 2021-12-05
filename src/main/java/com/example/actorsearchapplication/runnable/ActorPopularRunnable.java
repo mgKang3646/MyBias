@@ -41,6 +41,7 @@ public class ActorPopularRunnable implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
             Log.v("Tag", "RunnableActorPoplar error");
+            clientAPI.requestPopularActors();
         }
     }
 }

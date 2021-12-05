@@ -38,6 +38,7 @@ public class TvRunnable implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
             Log.v("Tag","TvRunnable : error");
+            clientAPI.requestTvs();
         }
     }
 }

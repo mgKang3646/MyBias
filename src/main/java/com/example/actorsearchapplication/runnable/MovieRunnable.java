@@ -37,6 +37,7 @@ public class MovieRunnable implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
             Log.v("Tag" ,"MovieRunnable : error");
+            clientAPI.requestMovies();
         }
     }
 }

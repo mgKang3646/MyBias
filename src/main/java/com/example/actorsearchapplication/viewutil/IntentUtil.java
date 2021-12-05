@@ -17,8 +17,10 @@ import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.SearchActivity;
 import com.example.actorsearchapplication.SearchImageActivity;
 import com.example.actorsearchapplication.SelectedImageActivity;
+import com.example.actorsearchapplication.WebViewActivity;
 import com.example.actorsearchapplication.adapters.MainRecyclerViewAdapter;
 import com.example.actorsearchapplication.models.ActorModel;
+import com.example.actorsearchapplication.models.SNSModel;
 
 import java.io.File;
 import java.io.Serializable;
@@ -105,6 +107,13 @@ public class IntentUtil {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         currentActivity.sendBroadcast(mediaScanIntent);
+    }
+
+    public void moveToWebViewActivity(SNSModel snsModel){
+        Intent intent = new Intent(currentActivity.getApplicationContext(), WebViewActivity.class);
+        intent.putExtra("SNSUrl",snsModel);
+        currentActivity.startActivity(intent);
+        currentActivity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     public void finish(){

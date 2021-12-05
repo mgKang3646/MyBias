@@ -78,6 +78,18 @@
             android:textSize="15dp"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_sns"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_add_overview_actor"
             android:layout_width="wrap_content"

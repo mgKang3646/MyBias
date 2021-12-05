@@ -29,6 +29,7 @@ import com.example.actorsearchapplication.adapters.ActorDetailViewAdapter;
 import com.example.actorsearchapplication.adapters.FilmographyRecyclerAdapter;
 import com.example.actorsearchapplication.observer.ActorDetailObserver;
 import com.example.actorsearchapplication.observer.FilmographyObserver;
+import com.example.actorsearchapplication.observer.SNSIdObserver;
 import com.example.actorsearchapplication.viewmodels.ActorDetailViewModel;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
 import com.example.actorsearchapplication.viewutil.IntentUtil;
@@ -53,6 +54,7 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
         super.onCreate(savedInstanceState);
         StatusBar.setStatusBar(this);
         setContentView(R.layout.activity_actor_detail);
+        actorDetailViewModel = new ActorDetailViewModel();
 
         onBindViewComponents();
         getIntentValue();
@@ -61,13 +63,15 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
         setMainViewUtil();
         setRecyclerViewUtil();
         setViewModel();
-
-
     }
 
     @Override
     public void moveDetailPage(Class className, int id) {
         intentUtil.moveToDetailActivity(className,id);
+    }
+
+    public ActorDetailViewModel getActorDetailViewModel(){
+        return actorDetailViewModel;
     }
 
     private void getIntentValue(){
@@ -95,7 +99,7 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
     private void setMainViewUtil(){
         mainViewUtil = new MainViewUtil();
         mainViewUtil.inflate(getApplicationContext(),R.layout.layout_actor_detail,layout_parent_actor_detail);
-        mainViewUtil.createActorDetailViewAdapter();
+        mainViewUtil.createActorDetailViewAdapter(this);
     }
 
     private void setRecyclerViewUtil(){
@@ -104,11 +108,12 @@ public class ActorDetailActivity extends AppCompatActivity implements ActivityCl
     }
 
     private void setViewModel(){
-        actorDetailViewModel = new ActorDetailViewModel();
         actorDetailViewModel.getActorDetail().observe(this,new ActorDetailObserver(mainViewUtil.getMainViewAdapter()));
         actorDetailViewModel.getFilmography().observe(this,new FilmographyObserver(recyclerViewUtil.getRecyclerViewAdapter()));
         actorDetailViewModel.requestActorDetail(id);
         actorDetailViewModel.requestFilmography(id);
     }
+
+
 
 }

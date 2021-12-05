@@ -6,6 +6,7 @@ import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.FilmographyModel;
 import com.example.actorsearchapplication.models.MovieDetailModel;
 import com.example.actorsearchapplication.models.MovieModel;
+import com.example.actorsearchapplication.models.SNSIdModel;
 import com.example.actorsearchapplication.models.TvDetailModel;
 import com.example.actorsearchapplication.models.TvModel;
 import com.example.actorsearchapplication.runnable.ActorDetailRunnable;
@@ -18,6 +19,7 @@ import com.example.actorsearchapplication.runnable.FilmographyRunnable;
 import com.example.actorsearchapplication.runnable.ImageSearchedActorRunnable;
 import com.example.actorsearchapplication.runnable.MovieDetailRunnable;
 import com.example.actorsearchapplication.runnable.MovieRunnable;
+import com.example.actorsearchapplication.runnable.SNSIdRunnable;
 import com.example.actorsearchapplication.runnable.SearchRunnable;
 import com.example.actorsearchapplication.runnable.TvDetailRunnable;
 import com.example.actorsearchapplication.runnable.TvRunnable;
@@ -29,7 +31,6 @@ import java.util.concurrent.Future;
 
 public class ClientAPI {
 
-    private RequestExecutor requestExecutor;
 
     public void requestPopularActors(){
         ActorPopularRunnable actorPopularRunnable = new ActorPopularRunnable(this);
@@ -97,6 +98,12 @@ public class ClientAPI {
             MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
     }
 
+    public void requestSNSId(int id){
+        SNSIdRunnable snsIdRunnable = new SNSIdRunnable(this,id);
+        Future future = MVVMFactory.getRequestExecutor().getScheduledExecutorService().submit(snsIdRunnable);
+        MVVMFactory.getRequestExecutor().cancelRunnable(new CancelRunnable(future));
+    }
+
     public MutableLiveData<List<ActorModel>> getPopularActors() {
         return MVVMFactory.getMainRepository().getPopularActors();
     }
@@ -123,5 +130,8 @@ public class ClientAPI {
     }
     public MutableLiveData<List<ActorModel>> getSearchedActors(){
         return MVVMFactory.getMainRepository().getSearchedActors();
+    }
+    public MutableLiveData<SNSIdModel> getSNSId(){
+        return MVVMFactory.getMainRepository().getSnsId();
     }
 }

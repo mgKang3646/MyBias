@@ -1,22 +1,19 @@
 package com.example.actorsearchapplication.repositories;
 
-import android.content.Context;
-import android.graphics.Movie;
+
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.actorsearchapplication.TvDetailActivity;
 import com.example.actorsearchapplication.models.ActorDetailModel;
 import com.example.actorsearchapplication.models.ActorModel;
 import com.example.actorsearchapplication.models.FilmographyModel;
 import com.example.actorsearchapplication.models.MovieDetailModel;
 import com.example.actorsearchapplication.models.MovieModel;
-import com.example.actorsearchapplication.models.TrendModel;
+import com.example.actorsearchapplication.models.SNSIdModel;
 import com.example.actorsearchapplication.models.TvDetailModel;
 import com.example.actorsearchapplication.models.TvModel;
 import com.example.actorsearchapplication.utils.MVVMFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainRepository {
@@ -30,6 +27,7 @@ public class MainRepository {
     private MutableLiveData<List<FilmographyModel>> filmography;
     private MutableLiveData<List<ActorModel>> casting;
     private MutableLiveData<List<ActorModel>> searchedActors;
+    private MutableLiveData<SNSIdModel> snsId;
 
 
     public MainRepository(){
@@ -42,6 +40,7 @@ public class MainRepository {
         this.casting = new MutableLiveData<>();
         this.tvDetail = new MutableLiveData<>();
         this.searchedActors = new MutableLiveData<>();
+        this.snsId = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<ActorModel>> getPopularActors(){
@@ -55,6 +54,7 @@ public class MainRepository {
     public MutableLiveData<List<ActorModel>> getCasting(){ return casting; }
     public MutableLiveData<TvDetailModel> getTvDetail() { return tvDetail; }
     public MutableLiveData<List<ActorModel>> getSearchedActors(){ return searchedActors; }
+    public MutableLiveData<SNSIdModel> getSnsId(){ return snsId;}
 
     public void requestPopularActors(){ MVVMFactory.getClientAPI().requestPopularActors();}
     public void requestMovies(){ MVVMFactory.getClientAPI().requestMovies(); }
@@ -66,6 +66,7 @@ public class MainRepository {
     public void requestTvDetail(int id) { MVVMFactory.getClientAPI().requestTvDetail(id);}
     public void requestCastingTv(int id) { MVVMFactory.getClientAPI().requestCastingTv(id);}
     public void requestSearchActor(String name) { MVVMFactory.getClientAPI().requestSearchActor(name);}
+    public void requestSNSId(int id){ MVVMFactory.getClientAPI().requestSNSId(id);}
 
     public ActorModel getSelectedActor(int position){ return popularActors.getValue().get(position); }
     public MovieModel getSelectedMovie(int position){ return movies.getValue().get(position);}

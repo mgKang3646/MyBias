@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.actorsearchapplication.ActorDetailActivity;
 import com.example.actorsearchapplication.MainActivityViewListener;
 import com.example.actorsearchapplication.R;
 import com.example.actorsearchapplication.adapters.MainContentViewHolder;
@@ -29,7 +30,7 @@ public class MainViewUtil {
     public void inflate(Context context ,int layout, LinearLayout parent){ mainView = View.inflate(context,layout,parent); }
 
     public void createSelectedViewAdapter(MainContentViewHolder mainContentViewHolder) { mainViewAdapter = mainViewAdapterFactory.getSelectedViewAdapter(mainContentViewHolder,mainView); }
-    public void createActorDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getActorDetailAdapter(mainView); }
+    public void createActorDetailViewAdapter(ActorDetailActivity actorDetailActivity){ mainViewAdapter = mainViewAdapterFactory.getActorDetailAdapter(mainView,actorDetailActivity); }
     public void createMovieDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getMovieDetailAdapter(mainView); }
     public void createTvDetailViewAdapter(){ mainViewAdapter = mainViewAdapterFactory.getTvDetailAdapter(mainView); }
 }

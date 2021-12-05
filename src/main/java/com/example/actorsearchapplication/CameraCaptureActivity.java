@@ -379,7 +379,6 @@ public class CameraCaptureActivity extends AppCompatActivity {
         }
     };
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
-
         @Override //카메라로부터 이미지를 받은 경우
         public void onImageAvailable(ImageReader imageReader) {
             capturedImage = imageReader.acquireLatestImage();
