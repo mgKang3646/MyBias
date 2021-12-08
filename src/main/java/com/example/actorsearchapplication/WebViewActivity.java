@@ -3,15 +3,19 @@ package com.example.actorsearchapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.actorsearchapplication.models.SNSModel;
 import com.example.actorsearchapplication.utils.SNSUtil;
 import com.example.actorsearchapplication.viewutil.ButtonClickHandler;
@@ -21,6 +25,8 @@ public class WebViewActivity extends AppCompatActivity {
 
     ImageButton backButton;
     TextView titleView;
+    LottieAnimationView loadingView;
+    ImageView loadingBackground;
     private WebView webView;
     private String url = "";
 
@@ -33,6 +39,9 @@ public class WebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.web_view);
         backButton = findViewById(R.id.backButton);
         titleView = findViewById(R.id.tv_Title);
+        loadingView= findViewById(R.id.loading_anim_webview);
+        loadingBackground = findViewById(R.id.loading_background_webview);
+
 
         ButtonClickHandler buttonClickHandler = new ButtonClickHandler(this);
         buttonClickHandler.setOnClickEvent(backButton);
@@ -64,6 +73,20 @@ public class WebViewActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            loadingBackground.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            loadingView.setVisibility(View.INVISIBLE);
+            loadingBackground.setVisibility(View.INVISIBLE);
         }
     }
 }

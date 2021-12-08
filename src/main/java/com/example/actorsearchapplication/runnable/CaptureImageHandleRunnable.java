@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.actorsearchapplication.CameraCaptureActivity;
@@ -44,6 +45,7 @@ public class CaptureImageHandleRunnable implements Runnable{
         private void writeImageTOFile(){
             FileOutputStream fileOutputStream = null;
             try {
+                Log.v("Tag","파일 쓰기 에러 전");
                 fileOutputStream = new FileOutputStream(imagePath);
                 fileOutputStream.write(bytes);
             } catch (IOException e) {
